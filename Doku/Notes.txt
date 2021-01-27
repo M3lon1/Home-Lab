@@ -1,0 +1,6 @@
+Hardware:
+    MCP3008 ADC     https://tutorials-raspberrypi.de/raspberry-pi-mcp3008-analoge-signale-auslesen/
+    Pulse Sensor    https://pulsesensor.com/
+    Raspberry pi    https://tutorials-raspberrypi.de/raspberry-pi-puls-herzfrequenz-messen/
+                    https://www.youtube.com/watch?v=s027fBoh96k
+                    https://github.com/tutRPi/Raspberry-Pi-Heartbeat-Pulse-Sensor
