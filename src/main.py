@@ -10,22 +10,27 @@ bpm = pulse_sensor.BPM
 gsr_sensor = GroveGSRSensor()
 gsr_sensor.startAsyncGSR()
 gsr = gsr_sensor.GSR
-
+interrupt = False
 # Loop to get values
-while True:
-    # BPM 
-    if bpm != pulse_sensor.BPM:
-        bpm = pulse_sensor.BPM
-        sdnn = pulse_sensor.get_SDNN()
-        rmssd = pulse_sensor.get_RMSSD()
-        print("---Pulse Data---")
-        print("BPM List: ", pulse_sensor.BPM_list[-1])
-        print("BPM: ", bpm)
-        print("SDNN: ", sdnn)
-        print("RMSSD: ", rmssd)
-    
-    # GSR
-    if gsr != gsr_sensor.GSR:
-        gsr = gsr_sensor.GSR
-        print("GSR: ", gsr)
-        print("GSR List: ", gsr_sensor.GSR_list[-1])
+while not interrupt:
+    try:
+        # BPM 
+        if bpm != pulse_sensor.BPM:
+            bpm = pulse_sensor.BPM
+            sdnn = pulse_sensor.get_SDNN()
+            rmssd = pulse_sensor.get_RMSSD()
+            print("---Pulse Data---")
+            print("BPM List: ", pulse_sensor.BPM_list[-1])
+            print("BPM: ", bpm)
+            print("SDNN: ", sdnn)
+            print("RMSSD: ", rmssd)
+        
+        # GSR
+        if gsr != gsr_sensor.GSR:
+            gsr = gsr_sensor.GSR
+            print("GSR: ", gsr)
+            print("GSR List: ", gsr_sensor.GSR_list[-1])
+    except KeyboardInterrupt:
+        pulse_sensor.stopAsyncBPM()
+        gsr_sensor.stopAsyncGSR()
+        interrupt = True
