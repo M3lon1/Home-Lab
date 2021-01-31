@@ -3,14 +3,16 @@ from grove.grove_gsr_sensor import GroveGSRSensor
 import datetime
 
 # Initialize Sensor, start async Thread and get initial BPM value
+# Pulse Sensor
 pulse_sensor = Pulsesensor()
 pulse_sensor.startAsyncBPM()
 bpm = pulse_sensor.BPM
-
+# GSR Sensor
 gsr_sensor = GroveGSRSensor()
 gsr_sensor.startAsyncGSR()
 gsr = gsr_sensor.GSR
 interrupt = False
+
 # Loop to get values
 while not interrupt:
     try:
@@ -30,6 +32,7 @@ while not interrupt:
             gsr = gsr_sensor.GSR
             print("GSR: ", gsr)
             print("GSR List: ", gsr_sensor.GSR_list[-1])
+            
     except KeyboardInterrupt:
         pulse_sensor.stopAsyncBPM()
         gsr_sensor.stopAsyncGSR()
