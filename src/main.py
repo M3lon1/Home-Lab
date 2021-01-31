@@ -1,5 +1,5 @@
-from pulse.pulsesensor import *
-from grove.grove_gsr_sensor import *
+from pulse.pulsesensor import Pulsesensor
+from grove.grove_gsr_sensor import GroveGSRSensor
 import datetime
 
 # Initialize Sensor, start async Thread and get initial BPM value
