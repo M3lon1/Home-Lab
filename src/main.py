@@ -1,22 +1,31 @@
-from sensors import *
+from pulse.pulsesensor import *
+from grove.grove_gsr_sensor import *
 import datetime
 
-#s = get_heartbeat()
-g = get_GSR()
-print("hello")
-#c = GroveGSRSensor()
-#c.startAsyncGSR()
+# Initialize Sensor, start async Thread and get initial BPM value
+pulse_sensor = Pulsesensor()
+pulse_sensor.startAsyncBPM()
+bpm = pulse_sensor.BPM
 
+gsr_sensor = GroveGSRSensor()
+gsr_sensor.startAsyncGSR()
+gsr = gsr_sensor.GSR
 
+# Loop to get values
 while True:
-    print("------")
+    # BPM 
+    if bpm != pulse_sensor.BPM:
+        bpm = pulse_sensor.BPM
+        sdnn = pulse_sensor.get_SDNN()
+        rmssd = pulse_sensor.get_RMSSD()
+        print("---Pulse Data---")
+        print("BPM List: ", pulse_sensor.BPM_list[-1])
+        print("BPM: ", bpm)
+        print("SDNN: ", sdnn)
+        print("RMSSD: ", rmssd)
     
-
-    #print("GSR", next(g))
-    print(g)
-    #x = next(s)
-    #print("Heartbeat: ", x[0])
-    #print("SDNN: ", get_SDNN(), "ms")
-    #print("RMSSD: ", get_RMSSD(), "ms")
-    
-    #print(c.gsr_list)
+    # GSR
+    if gsr != gsr_sensor.GSR:
+        gsr = gsr_sensor.GSR
+        print("GSR: ", gsr)
+        print("GSR List: ", gsr_sensor.GSR_list[-1])
