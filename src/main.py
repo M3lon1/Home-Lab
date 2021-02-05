@@ -30,8 +30,7 @@ while not interrupt:
         # GSR
         if gsr != gsr_sensor.GSR:
             gsr = gsr_sensor.GSR
-            print("GSR: ", gsr)
-            print("GSR List: ", gsr_sensor.GSR_list[-1])
+            print("GSR: ", gsr, "siemens")
             
     except KeyboardInterrupt:
         pulse_sensor.stopAsyncBPM()

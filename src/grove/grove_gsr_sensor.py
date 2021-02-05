@@ -13,15 +13,13 @@ class GroveGSRSensor:
         self.GSR = 0
         self.GSR_list = []
         
-    def getGSR(self):
-        while not self.thread.stopped:
-            self.GSR = self.adc.read(self.channel)
     
     def saveGSRList(self):
         start_time = time.time()
         tmp_time = time.time()
         while not self.thread.stopped:
-            value = self.adc.read(self.channel)
+            signal = self.adc.read(self.channel)
+            value = 1/(((1024 + 2 * signal) * 10000) / (512 - signal))
             self.GSR = value
             if not self.GSR_list or self.GSR_list[-1][0] != value:
                 self.GSR_list.append([value, time.time() - start_time])
@@ -39,4 +37,4 @@ class GroveGSRSensor:
         return
 
 
-
+    
