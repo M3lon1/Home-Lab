@@ -4,13 +4,14 @@ import time
 import math
 import threading
 from pulse.MCP3008 import MCP3008
+import matplotlib.pyplot as plt
 
 class Pulsesensor:
     def __init__(self, channel = 0, bus = 0, device = 0):
         self.channel = channel
         self.BPM = 0
         self.adc = MCP3008(bus, device)
-        self.BPM_list = []
+        self.BPM_list = [] #[value, time stamp, time difference to last peak]
 
     def getBPMLoop(self):
         # init variables
@@ -152,3 +153,13 @@ class Pulsesensor:
             rmssd = math.sqrt(1/(len(self.BPM_list)-1) * s)
             return int(rmssd)
     
+    def plot(self):
+        plt.style.use('fivethirtyeight')
+        x_val = []
+        y_val = []
+        for i in range(len(self.BPM_list)):
+            x_val.append(self.BPM_list[i][-2])
+            y_val.append(self.BPM_list[i][0])
+        plt.plot(x_val, y_val)
+        plt.tight_layout()
+        plt.show()
