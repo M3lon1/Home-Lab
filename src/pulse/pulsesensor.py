@@ -5,6 +5,7 @@ import math
 import threading
 from pulse.MCP3008 import MCP3008
 import matplotlib.pyplot as plt
+import csv
 
 class Pulsesensor:
     def __init__(self, channel = 0, bus = 0, device = 0):
@@ -163,3 +164,9 @@ class Pulsesensor:
         plt.plot(x_val, y_val)
         plt.tight_layout()
         plt.show()
+    
+    def save(self, path):
+        with open(path, 'w', newline="") as f:
+            writer = csv.writer(f)
+            writer.writerows(self.BPM_list)
+            

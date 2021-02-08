@@ -4,6 +4,7 @@ import time
 import threading
 from grove.adc import ADC
 import matplotlib.pyplot as plt
+import csv
  
 class GroveGSRSensor:
  
@@ -49,4 +50,7 @@ class GroveGSRSensor:
         plt.plot(x_val, y_val)
         plt.tight_layout()
         plt.show()
-    
+    def save(self, path):
+        with open(path, 'w', newline="") as f:
+            writer = csv.writer(f)
+            writer.writerows(self.BPM_list)

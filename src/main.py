@@ -27,13 +27,14 @@ while not interrupt:
             print("BPM: ", bpm)
             print("SDNN: ", sdnn)
             print("RMSSD: ", rmssd)
-        
+        '''
         # GSR
         if gsr != gsr_sensor.GSR:
             gsr = gsr_sensor.GSR
             print("GSR: ", gsr, "siemens")
-
+        '''
     except KeyboardInterrupt:
+        pulse_sensor.save("out.csv")
         gsr_sensor.plot()
         pulse_sensor.plot()
         pulse_sensor.stopAsyncBPM()
