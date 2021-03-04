@@ -31,9 +31,11 @@ while not interrupt:
         # GSR
         if gsr != gsr_sensor.GSR:
             gsr = gsr_sensor.GSR
+            print("---GSR Data---")
             print("GSR: ", gsr, "siemens")
         '''
     except KeyboardInterrupt:
+        # interrupt with ctrl + c
         pulse_sensor.save("out.csv")
         gsr_sensor.plot()
         pulse_sensor.plot()
