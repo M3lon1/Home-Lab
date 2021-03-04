@@ -1,8 +1,34 @@
 from pulse.pulsesensor import Pulsesensor
 from grove.grove_gsr_sensor import GroveGSRSensor
 import datetime
+import tkinter as tk
 
 
+# root window 
+root = tk.Tk()
+width = root.winfo_screenwidth()
+height = root.winfo_screenheight()
+root.geometry(f'{width}x{height}')
+root.title("PsyMex-2")
+
+# Heart Rate Window
+hr_window = tk.Frame(root, width=width, height = height/2, highlightbackground="black", highlightthickness=1)
+hr_window.pack_propagate(0)
+hr_window.pack(side="top")
+lbl_hr = tk.Label(hr_window, text="Heart Rate", font=("Arial Bold", 20))
+lbl_hr.pack(padx=lbl_hr.winfo_width()/2)
+
+# Heart Rate Window
+gsr_window = tk.Frame(root, width=width, height=height/2, highlightbackground="black", highlightthickness=1)
+gsr_window.pack_propagate(0)
+gsr_window.pack(side="top")
+lbl_gsr = tk.Label(gsr_window, text="Skin Conductance", font=("Arial Bold", 20))
+lbl_gsr.pack(padx=lbl_gsr.winfo_width()/2)
+
+
+root.mainloop()
+
+"""
 # Initialize Sensor, start async Thread and get initial BPM value
 # Pulse Sensor
 pulse_sensor = Pulsesensor()
@@ -42,3 +68,5 @@ while not interrupt:
         pulse_sensor.stopAsyncBPM()
         gsr_sensor.stopAsyncGSR()
         interrupt = True
+        
+"""
