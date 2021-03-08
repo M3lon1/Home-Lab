@@ -22,18 +22,25 @@ class Window(QWidget):
         # Dashboard button
         button_home = QPushButton('Dashboard')
         button_home.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
-        button_home.setStyleSheet("""
-            QPushButton { background-color: red; border: none}
-        """)
+        button_home.setStyleSheet('''
+        QPushButton {color: #82ECF0; border: none; font: 20px}
+        QPushButton:pressed {color: #82ECFF; font: bold 20px;}
+        ''') # Border needs to be set to none to change background
         #button_home.setStyleSheet('QPushButton:pressed {border-style: outset; border-width: 2px; border-radius: 10px; border-color: #424242; font: bold 20px }')
         # Heart Rate button
         button_hr = QPushButton('Heart Rate')
         button_hr.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
-        button_hr.setStyleSheet('color: #82ECF0; border-style: outset; border-width: 2px; border-radius: 10px; border-color: #424242; font: bold 20px')
+        button_hr.setStyleSheet('''
+        QPushButton {color: #82ECF0; border: none; font: 20px}
+        QPushButton:pressed {color: #82ECFF; font: bold 20px;}
+        ''')
         # Heart Rate button
         button_gsr = QPushButton('Skin Conductance')
         button_gsr.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
-        button_gsr.setStyleSheet('border-style: outset; border-width: 2px; border-radius: 10px; border-color: #424242; font: bold 20px')
+        button_gsr.setStyleSheet('''
+        QPushButton {color: #82ECF0; border: none; font: 20px}
+        QPushButton:pressed {color: #82ECFF; font: bold 20px;}
+        ''')
         
         # PsyMex-2 icon
         psymex_label = QLabel('<h1>PsyMex-2</h1>')
