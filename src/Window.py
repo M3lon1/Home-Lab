@@ -7,6 +7,12 @@ import matplotlib as mpl
 import matplotlib.figure as mpl_fig
 import matplotlib.animation as anim
 import numpy as np
+import random as rnd
+from graph import *
+import pyqtgraph as pg
+from pulse.pulsesensor import Pulsesensor
+from grove.grove_gsr_sensor import GroveGSRSensor
+import datetime
 
 class Window(QWidget):
     '''
@@ -64,12 +70,12 @@ class Window(QWidget):
         menu_layout.addWidget(button_hr, 1)
         menu_layout.addWidget(button_gsr, 1)
         
-        # Plot Layout Horizontal Box
+        # Live Plot
         view = QVBoxLayout()
-        plot_hr = MyFigureCanvas(10,10)
-        view.addWidget(plot_hr)
-        
-        plot_gsr = MyFigureCanvas(2,2)
+        self.plot_hr = pg.PlotWidget(title='Heart Rate')
+        view.addWidget(self.plot_hr)
+        self.hr_plot()
+        plot_gsr = pg.PlotWidget(title='Skin Conductance')
         view.addWidget(plot_gsr)
         
         # Building overal Layout
@@ -79,29 +85,19 @@ class Window(QWidget):
         outer_layout.addLayout(view, 4)
         
         self.setLayout(outer_layout)
-        
-
-class MyFigureCanvas(FigureCanvas, anim.FuncAnimation):
-    '''
-    This is the FigureCanvas in which the live plot is drawn
-    '''
-    def __init__(self, x_dim, y_dim):
-        
-        FigureCanvas.__init__(self, mpl_fig.Figure())
-        self.ax = self.figure.subplots()
-        self.ax.set_ylim(ymin=0, ymax=y_dim)
-        self.ax.set_xlim(xmin=0, xmax=x_dim)
-        self.line,  = self.ax.plot([], [], lw=2)
-        
-        anim.FuncAnimation.__init__(self, self.figure, self.update_canvas,frames=200, interval=20, blit=True)
     
-    def update_canvas(self, i):
-        # Get data values from 
-        x = 0
-        y = 0
-        self.line.set_data(x,y)
-        return self.line
-        
+    def hr_plot(self):
+        '''
+        QTimer gets called every interval
+        '''
+        self.hr_timer = QtCore.QTimer()
+        self.hr_timer.timeout.connect(self.updater)
+        self.hr_timer.start(500)
+    
+    def updater(self):
+        self.plot_hr.plot([random.randint(0,2), random.randint(2,4)])
+        print("1")
+    
 def main():
     app = QApplication(sys.argv)
     GUI = Window()
