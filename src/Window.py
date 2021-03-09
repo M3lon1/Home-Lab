@@ -71,12 +71,22 @@ class Window(QWidget):
         menu_layout.addWidget(button_gsr, 1)
         
         # Live Plot
+        self.pen = pg.mkPen(color=(255,255,255), width=2)
+        
         view = QVBoxLayout()
         self.plot_hr = pg.PlotWidget(title='Heart Rate')
+        self.plot_hr.setBackground('#212121')
+        self.plot_hr.setLabel('left', 'BPM')
+        self.plot_hr.setLabel('bottom', 'Time (s)')
+        #self.plot_hr.setXRange(0,20)
+        self.plot_hr.setYRange(30,150)
+        self.line_ref = self.plot_hr.plot(pen=self.pen, symbol='o')
         view.addWidget(self.plot_hr)
         self.hr_plot()
-        plot_gsr = pg.PlotWidget(title='Skin Conductance')
-        view.addWidget(plot_gsr)
+        
+        self.plot_gsr = pg.PlotWidget(title='Skin Conductance')
+        self.plot_gsr.setBackground('#212121')
+        view.addWidget(self.plot_gsr)
         
         # Building overal Layout
         left_bar.addLayout(psymex_layout, 1)
@@ -90,14 +100,31 @@ class Window(QWidget):
         '''
         QTimer gets called every interval
         '''
+        self.hr_x = [0]
+        self.hr_y = [0]
+        self.pulse_sensor = Pulsesensor()
+        self.pulse_sensor.startAsyncBPM()
         self.hr_timer = QtCore.QTimer()
-        self.hr_timer.timeout.connect(self.updater)
+        self.hr_timer.timeout.connect(self.update_plot)
         self.hr_timer.start(500)
+        
     
-    def updater(self):
-        self.plot_hr.plot([random.randint(0,2), random.randint(2,4)])
-        print("1")
+    def update_plot(self):
+        if len(self.pulse_sensor.BPM_list) > 1:
+            if self.hr_y[-1] != self.pulse_sensor.BPM_list[-1][0]:
+                self.hr_x.append(int(self.pulse_sensor.BPM_list[-1][1]))
+                self.hr_y.append(self.pulse_sensor.BPM_list[-1][0])
+
+        try:
+            self.line_ref.setData(self.hr_x, self.hr_y)
+            print(self.hr_x, self.hr_y)
+            print(len(self.pulse_sensor.BPM_list))
+            print("update_plot")
+        except:
+            print(len(self.pulse_sensor.BPM_list))
+            print(sys.exc_info())
     
+            
 def main():
     app = QApplication(sys.argv)
     GUI = Window()

@@ -74,7 +74,6 @@ class Pulsesensor:
 
                     runningTotal /= len(rate)           # average the IBI values 
                     x = 60000/runningTotal
-                    self.BPM = x       # how many beats can fit into a minute? that's BPM!
                     if not self.BPM_list or self.BPM_list[-1][0] != x:
                         try:
                             delta = (time.time() - tmp_time) * 1000
