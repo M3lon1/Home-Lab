@@ -80,14 +80,18 @@ class Window(QWidget):
         self.plot_hr.setLabel('bottom', 'Time (s)')
         #self.plot_hr.setXRange(0,20)
         self.plot_hr.setYRange(30,150)
-        self.line_ref = self.plot_hr.plot(pen=self.pen, symbol='o')
+        self.hr_line_ref = self.plot_hr.plot(pen=self.pen, symbol='o')
         view.addWidget(self.plot_hr)
         self.hr_plot()
         
         self.plot_gsr = pg.PlotWidget(title='Skin Conductance')
         self.plot_gsr.setBackground('#212121')
+        self.plot_gsr.setLabel('left', 'Siemens')
+        self.plot_gsr.setLabel('bottom', 'Time (s)')
+        self.plot_hr.setYRange(-10,100)
+        self.gsr_line_ref = self.plot_gsr.plot(pen=self.pen, symbol='o')
         view.addWidget(self.plot_gsr)
-        
+        self.gsr_plot()
         # Building overal Layout
         left_bar.addLayout(psymex_layout, 1)
         left_bar.addLayout(menu_layout, 2)
@@ -105,18 +109,39 @@ class Window(QWidget):
         self.pulse_sensor = Pulsesensor()
         self.pulse_sensor.startAsyncBPM()
         self.hr_timer = QtCore.QTimer()
-        self.hr_timer.timeout.connect(self.update_plot)
+        self.hr_timer.timeout.connect(self.update_hr_plot)
         self.hr_timer.start(500)
+        return
         
+    def gsr_plot(self):
+        self.gsr_x = [0]
+        self.gsr_y = [0]
+        self.gsr_sensor = GroveGSRSensor()
+        self.gsr_sensor.startAsyncGSR()
+        self.gsr_timer = QtCore.QTimer()
+        self.gsr_timer.timeout.connect(self.update_gsr_plot)
+        self.gsr_timer.start(500)
+        return
     
-    def update_plot(self):
+    def update_gsr_plot(self):
+        if len(self.gsr_sensor.GSR_list) > 1:
+            if self.gsr_y[-1] != self.gsr_sensor.GSR_list[-1][0]:
+                y = self.gsr_sensor.GSR_list[-1][0] * 10**6
+                print(y)
+                self.gsr_y.append(y)
+                self.gsr_x.append(self.gsr_sensor.GSR_list[-1][1])
+        try:
+            self.gsr_line_ref.setData(self.gsr_x, self.gsr_y)
+        except:
+            print(sys.exc_info())
+            
+    def update_hr_plot(self):
         if len(self.pulse_sensor.BPM_list) > 1:
             if self.hr_y[-1] != self.pulse_sensor.BPM_list[-1][0]:
                 self.hr_x.append(int(self.pulse_sensor.BPM_list[-1][1]))
                 self.hr_y.append(self.pulse_sensor.BPM_list[-1][0])
-
         try:
-            self.line_ref.setData(self.hr_x, self.hr_y)
+            self.hr_line_ref.setData(self.hr_x, self.hr_y)
             print(self.hr_x, self.hr_y)
             print(len(self.pulse_sensor.BPM_list))
             print("update_plot")

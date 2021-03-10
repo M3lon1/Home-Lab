@@ -12,7 +12,7 @@ class GroveGSRSensor:
         self.channel = channel
         self.adc = ADC()
         self.GSR = 0
-        self.GSR_list = []
+        self.GSR_list = [] # value, timestamp
         
     
     def saveGSRList(self):
