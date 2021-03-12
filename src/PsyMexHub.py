@@ -1,24 +1,21 @@
 import sys
 from PyQt5.QtWidgets import *
-#from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from matplotlib.backends.backend_qt5agg import FigureCanvas
-import matplotlib as mpl
-import matplotlib.figure as mpl_fig
-import matplotlib.animation as anim
-import numpy as np
-import random as rnd
 from graph import *
 import pyqtgraph as pg
 from pulse.pulsesensor import Pulsesensor
 from grove.grove_gsr_sensor import GroveGSRSensor
-import datetime
 
 class MainWindow(QWidget):
     '''
     This is the main Window Class
     '''
     def __init__(self):
+        '''
+        Initializes MainWindow (PsyMexHub)
+        
+        '''
         super().__init__()
         self.setWindowTitle('PsyMex-2')
         self.setStyleSheet('QWidget { background-color: #212121; }')
@@ -48,7 +45,7 @@ class MainWindow(QWidget):
         button_home.setStyleSheet('''
         QPushButton {background-color: #1c1c1c; color: #82ECF0 ; border-style: outset; border-width: 0px; border-color: #1c1c1c; font: 20px}
         QPushButton:pressed {color: #82ECFF; font: bold 20px;}
-        ''') # Border needs to be set to none to change background
+        ''') 
         
             # Heart Rate button
         button_hr = QPushButton('Heart Rate')
@@ -67,62 +64,62 @@ class MainWindow(QWidget):
         
         # Plot Buttons
         # Start Heart Rate Plot
-        self.button_start_hr = QPushButton('Start')
-        self.button_start_hr.setStyleSheet('''
+        button_start_hr = QPushButton('Start')
+        button_start_hr.setStyleSheet('''
         QPushButton {color: #82ECF0; border: none; font: 20px}
         QPushButton:pressed {color: #82ECFF; font: bold 20px;}
         ''')
-        self.button_start_hr.clicked.connect(self.hr_plot)
+        button_start_hr.clicked.connect(self.hr_plot)
         # Stop Heart Rate Plot
-        self.button_stop_hr = QPushButton('Stop')
-        self.button_stop_hr.setStyleSheet('''
+        button_stop_hr = QPushButton('Stop')
+        button_stop_hr.setStyleSheet('''
         QPushButton {color: #82ECF0; border: none; font: 20px}
         QPushButton:pressed {color: #82ECFF; font: bold 20px;}
         ''')
-        self.button_stop_hr.clicked.connect(self.hr_plot_stop)
+        button_stop_hr.clicked.connect(self.hr_plot_stop)
         
         # Clear GSR Plot
-        self.button_clear_hr = QPushButton('Clear')
-        self.button_clear_hr.setStyleSheet('''
+        button_clear_hr = QPushButton('Clear')
+        button_clear_hr.setStyleSheet('''
         QPushButton {color: #82ECF0; border: none; font: 20px}
         QPushButton:pressed {color: #82ECFF; font: bold 20px;}
         ''')
-        self.button_clear_hr.clicked.connect(self.hr_plot_clear)
+        button_clear_hr.clicked.connect(self.hr_plot_clear)
         
         # Start GSR Plot
-        self.button_start_gsr = QPushButton('Start')
-        self.button_start_gsr.setStyleSheet('''
+        button_start_gsr = QPushButton('Start')
+        button_start_gsr.setStyleSheet('''
         QPushButton {color: #82ECF0; border: none; font: 20px}
         QPushButton:pressed {color: #82ECFF; font: bold 20px;}
         ''')
-        self.button_start_gsr.clicked.connect(self.gsr_plot)
+        button_start_gsr.clicked.connect(self.gsr_plot)
         # Stop GSR Plot
-        self.button_stop_gsr = QPushButton('Stop')
-        self.button_stop_gsr.setStyleSheet('''
+        button_stop_gsr = QPushButton('Stop')
+        button_stop_gsr.setStyleSheet('''
         QPushButton {color: #82ECF0; border: none; font: 20px}
         QPushButton:pressed {color: #82ECFF; font: bold 20px;}
         ''')
-        self.button_stop_gsr.clicked.connect(self.gsr_plot_stop)
+        button_stop_gsr.clicked.connect(self.gsr_plot_stop)
         # Clear GSR Plot
-        self.button_clear_gsr = QPushButton('Clear')
-        self.button_clear_gsr.setStyleSheet('''
+        button_clear_gsr = QPushButton('Clear')
+        button_clear_gsr.setStyleSheet('''
         QPushButton {color: #82ECF0; border: none; font: 20px}
         QPushButton:pressed {color: #82ECFF; font: bold 20px;}
         ''')
-        self.button_clear_gsr.clicked.connect(self.gsr_plot_clear)
+        button_clear_gsr.clicked.connect(self.gsr_plot_clear)
         
         # Adding Buttons to their Container
         container_left_menu_layout.addWidget(button_home)
         container_left_menu_layout.addWidget(button_hr)
         container_left_menu_layout.addWidget(button_gsr)
         
-        container_right_hr_menu_layout.addWidget(self.button_start_hr)
-        container_right_hr_menu_layout.addWidget(self.button_stop_hr)
-        container_right_hr_menu_layout.addWidget(self.button_clear_hr)
+        container_right_hr_menu_layout.addWidget(button_start_hr)
+        container_right_hr_menu_layout.addWidget(button_stop_hr)
+        container_right_hr_menu_layout.addWidget(button_clear_hr)
         
-        container_right_gsr_menu_layout.addWidget(self.button_start_gsr)
-        container_right_gsr_menu_layout.addWidget(self.button_stop_gsr)
-        container_right_gsr_menu_layout.addWidget(self.button_clear_gsr)
+        container_right_gsr_menu_layout.addWidget(button_start_gsr)
+        container_right_gsr_menu_layout.addWidget(button_stop_gsr)
+        container_right_gsr_menu_layout.addWidget(button_clear_gsr)
         #-----------------------------------------------------------
         # PsyMex-2 icon
         psymex_label = QLabel('<h1>PsyMex-2</h1>')
@@ -169,6 +166,7 @@ class MainWindow(QWidget):
         layout_right_top.addLayout(layout_right_top_right)
         layout_right_bottom.addLayout(layout_right_bottom_left)
         layout_right_bottom.addLayout(layout_right_bottom_right)
+        self.setLayout(layout_out)
         #-----------------------------------------------------------
         # Live Plot
         self.pen = pg.mkPen(color=(255,255,255), width=2)
@@ -188,16 +186,6 @@ class MainWindow(QWidget):
         self.gsr_line_ref = self.plot_gsr.plot(pen=self.pen, symbol='o')
         layout_right_bottom_right.addWidget(self.plot_gsr)
         #-----------------------------------------------------------
-        
-        
-        '''
-        left_bar.addLayout(psymex_layout, 1)
-        left_bar.addLayout(menu_layout, 2)
-        outer_layout.addLayout(left_bar,1)
-        outer_layout.addLayout(view_layout, 4)
-        view_layout.addLayout(view_buttons_layout, 1)
-        '''
-        self.setLayout(layout_out)
     
     
     def hr_plot(self):
@@ -231,7 +219,6 @@ class MainWindow(QWidget):
                 self.hr_y.append(self.pulse_sensor.BPM_list[-1][0])
         try:
             self.hr_line_ref.setData(self.hr_x, self.hr_y)
-            print('')
         except:
             print(sys.exc_info())
             
