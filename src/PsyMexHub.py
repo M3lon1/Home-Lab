@@ -27,17 +27,17 @@ class MainWindow(QWidget):
         #-----------------------------------------------------------
         # Container (Group boxes) for Buttons
         container_left_menu = QGroupBox()
-        container_left_menu.setStyleSheet('QGroup {}')
+        container_left_menu.setStyleSheet('QGroupBox {background-color: #1c1c1c; margin-left: 0; margin-bottom: -0}')
         container_left_menu_layout = QVBoxLayout()
         container_left_menu.setLayout(container_left_menu_layout)
         
         container_right_hr_menu = QGroupBox()
-        container_right_hr_menu.setStyleSheet('QGroup {}')
+        container_right_hr_menu.setStyleSheet('QGroupBox {}')
         container_right_hr_menu_layout = QVBoxLayout()
         container_right_hr_menu.setLayout(container_right_hr_menu_layout)
         
         container_right_gsr_menu = QGroupBox()
-        container_right_gsr_menu.setStyleSheet('QGroup {}')
+        container_right_gsr_menu.setStyleSheet('QGroupBox {}')
         container_right_gsr_menu_layout = QVBoxLayout()
         container_right_gsr_menu.setLayout(container_right_gsr_menu_layout)
         #-----------------------------------------------------------
@@ -46,7 +46,7 @@ class MainWindow(QWidget):
         button_home = QPushButton('Dashboard')
         button_home.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         button_home.setStyleSheet('''
-        QPushButton {color: #82ECF0; border: none; font: 20px}
+        QPushButton {background-color: #1c1c1c; color: #82ECF0 ; border-style: outset; border-width: 0px; border-color: #1c1c1c; font: 20px}
         QPushButton:pressed {color: #82ECFF; font: bold 20px;}
         ''') # Border needs to be set to none to change background
         
@@ -54,14 +54,14 @@ class MainWindow(QWidget):
         button_hr = QPushButton('Heart Rate')
         button_hr.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         button_hr.setStyleSheet('''
-        QPushButton {color: #82ECF0; border: none; font: 20px}
+        QPushButton {background-color: #1c1c1c; color: #82ECF0 ; border-style: outset; border-width: 0px; border-color: #1c1c1c; font: 20px}
         QPushButton:pressed {color: #82ECFF; font: bold 20px;}
         ''')
             # Heart Rate button
         button_gsr = QPushButton('Skin Conductance')
         button_gsr.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         button_gsr.setStyleSheet('''
-        QPushButton {color: #82ECF0; border: none; font: 20px}
+        QPushButton {background-color: #1c1c1c; color: #82ECF0 ; border-style: outset; border-width: 0px; border-color: #1c1c1c; font: 20px}
         QPushButton:pressed {color: #82ECFF; font: bold 20px;}
         ''')
         
@@ -130,7 +130,7 @@ class MainWindow(QWidget):
         layout_left_top.addWidget(psymex_label)
         
         # Menu Layout Vertical Box
-        layout_left_bottom.setContentsMargins(5,5,5,5) # left top right bottom
+        layout_left_bottom.setContentsMargins(0,5,5,0) # left top right bottom
         layout_left_bottom.addWidget(container_left_menu)
         
         # Heart Rate Buttons Layout
@@ -142,13 +142,13 @@ class MainWindow(QWidget):
         layout_right_bottom_left.addWidget(container_right_gsr_menu)
         # Building overal Layout
         layout_out.addLayout(layout_left, 1)
-        layout_out.addLayout(layout_right, 4)
+        layout_out.addLayout(layout_right, 6)
         
-        layout_left.addLayout(layout_left_top)
-        layout_left.addLayout(layout_left_bottom)
+        layout_left.addLayout(layout_left_top, 1)
+        layout_left.addLayout(layout_left_bottom, 3)
     
-        layout_right.addLayout(layout_right_top)
-        layout_right.addLayout(layout_right_bottom)
+        layout_right.addLayout(layout_right_top, 1)
+        layout_right.addLayout(layout_right_bottom, 1)
         layout_right_top.addLayout(layout_right_top_left)
         layout_right_top.addLayout(layout_right_top_right)
         layout_right_bottom.addLayout(layout_right_bottom_left)
@@ -166,7 +166,7 @@ class MainWindow(QWidget):
         
         self.plot_gsr = pg.PlotWidget(title='Skin Conductance')
         self.plot_gsr.setBackground('#212121')
-        self.plot_gsr.setLabel('left', 'Siemens')
+        self.plot_gsr.setLabel('left', 'Micro  Siemens')
         self.plot_gsr.setLabel('bottom', 'Time (s)')
         self.plot_hr.setYRange(-10,100)
         self.gsr_line_ref = self.plot_gsr.plot(pen=self.pen, symbol='o')
@@ -210,9 +210,6 @@ class MainWindow(QWidget):
                     self.hr_y.append(self.pulse_sensor.BPM_list[-1][0])
             try:
                 self.hr_line_ref.setData(self.hr_x, self.hr_y)
-                print(self.hr_x, self.hr_y)
-                print(len(self.pulse_sensor.BPM_list))
-                print("update_plot")
             except:
                 print(sys.exc_info())
         else:
@@ -238,7 +235,6 @@ class MainWindow(QWidget):
             if len(self.gsr_sensor.GSR_list) > 1:
                 if self.gsr_y[-1] != self.gsr_sensor.GSR_list[-1][0]:
                     y = self.gsr_sensor.GSR_list[-1][0] * 10**6
-                    print(y)
                     self.gsr_y.append(y)
                     self.gsr_x.append(self.gsr_sensor.GSR_list[-1][1])
             try:
