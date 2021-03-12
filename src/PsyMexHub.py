@@ -81,6 +81,14 @@ class MainWindow(QWidget):
         ''')
         self.button_stop_hr.clicked.connect(self.hr_plot_stop)
         
+        # Clear GSR Plot
+        self.button_clear_hr = QPushButton('Clear')
+        self.button_clear_hr.setStyleSheet('''
+        QPushButton {color: #82ECF0; border: none; font: 20px}
+        QPushButton:pressed {color: #82ECFF; font: bold 20px;}
+        ''')
+        self.button_clear_hr.clicked.connect(self.hr_plot_clear)
+        
         # Start GSR Plot
         self.button_start_gsr = QPushButton('Start')
         self.button_start_gsr.setStyleSheet('''
@@ -95,6 +103,13 @@ class MainWindow(QWidget):
         QPushButton:pressed {color: #82ECFF; font: bold 20px;}
         ''')
         self.button_stop_gsr.clicked.connect(self.gsr_plot_stop)
+        # Clear GSR Plot
+        self.button_clear_gsr = QPushButton('Clear')
+        self.button_clear_gsr.setStyleSheet('''
+        QPushButton {color: #82ECF0; border: none; font: 20px}
+        QPushButton:pressed {color: #82ECFF; font: bold 20px;}
+        ''')
+        self.button_clear_gsr.clicked.connect(self.gsr_plot_clear)
         
         # Adding Buttons to their Container
         container_left_menu_layout.addWidget(button_home)
@@ -103,9 +118,11 @@ class MainWindow(QWidget):
         
         container_right_hr_menu_layout.addWidget(self.button_start_hr)
         container_right_hr_menu_layout.addWidget(self.button_stop_hr)
+        container_right_hr_menu_layout.addWidget(self.button_clear_hr)
         
         container_right_gsr_menu_layout.addWidget(self.button_start_gsr)
         container_right_gsr_menu_layout.addWidget(self.button_stop_gsr)
+        container_right_gsr_menu_layout.addWidget(self.button_clear_gsr)
         #-----------------------------------------------------------
         # PsyMex-2 icon
         psymex_label = QLabel('<h1>PsyMex-2</h1>')
@@ -140,13 +157,12 @@ class MainWindow(QWidget):
         # GSR Buttons Layout
         layout_right_bottom_left.setContentsMargins(5,5,5,5)
         layout_right_bottom_left.addWidget(container_right_gsr_menu)
+        
         # Building overal Layout
         layout_out.addLayout(layout_left, 1)
         layout_out.addLayout(layout_right, 6)
-        
         layout_left.addLayout(layout_left_top, 1)
         layout_left.addLayout(layout_left_bottom, 3)
-    
         layout_right.addLayout(layout_right_top, 1)
         layout_right.addLayout(layout_right_bottom, 1)
         layout_right_top.addLayout(layout_right_top_left)
@@ -160,7 +176,7 @@ class MainWindow(QWidget):
         self.plot_hr.setBackground('#212121')
         self.plot_hr.setLabel('left', 'BPM')
         self.plot_hr.setLabel('bottom', 'Time (s)')
-        self.plot_hr.setYRange(30,150)
+        self.plot_hr.setYRange(-10, 200)
         self.hr_line_ref = self.plot_hr.plot(pen=self.pen, symbol='o')
         layout_right_top_right.addWidget(self.plot_hr)
         
@@ -168,7 +184,7 @@ class MainWindow(QWidget):
         self.plot_gsr.setBackground('#212121')
         self.plot_gsr.setLabel('left', 'Micro  Siemens')
         self.plot_gsr.setLabel('bottom', 'Time (s)')
-        self.plot_hr.setYRange(-10,100)
+        self.plot_gsr.setYRange(-10,30)
         self.gsr_line_ref = self.plot_gsr.plot(pen=self.pen, symbol='o')
         layout_right_bottom_right.addWidget(self.plot_gsr)
         #-----------------------------------------------------------
@@ -199,21 +215,25 @@ class MainWindow(QWidget):
         return
     
     def hr_plot_stop(self):
-        self.check_hr_plot = False
+        self.hr_timer.stop()
+        self.pulse_sensor.stopAsyncBPM()
         return
+    
+    def hr_plot_clear(self):
+        plt = self.plot_hr.getPlotItem()
+        plt.clear()
+        self.hr_line_ref = self.plot_hr.plot(pen=self.pen, symbol='o')
 
     def update_hr_plot(self):
-        if self.check_hr_plot:
-            if len(self.pulse_sensor.BPM_list) > 1:
-                if self.hr_y[-1] != self.pulse_sensor.BPM_list[-1][0]:
-                    self.hr_x.append(int(self.pulse_sensor.BPM_list[-1][1]))
-                    self.hr_y.append(self.pulse_sensor.BPM_list[-1][0])
-            try:
-                self.hr_line_ref.setData(self.hr_x, self.hr_y)
-            except:
-                print(sys.exc_info())
-        else:
-            self.pulse_sensor.stopAsyncBPM()
+        if len(self.pulse_sensor.BPM_list) > 1:
+            if self.hr_y[-1] != self.pulse_sensor.BPM_list[-1][0]:
+                self.hr_x.append(int(self.pulse_sensor.BPM_list[-1][1]))
+                self.hr_y.append(self.pulse_sensor.BPM_list[-1][0])
+        try:
+            self.hr_line_ref.setData(self.hr_x, self.hr_y)
+            print('')
+        except:
+            print(sys.exc_info())
             
     def gsr_plot(self):
         self.check_gsr_plot = True
@@ -227,22 +247,28 @@ class MainWindow(QWidget):
         return
     
     def gsr_plot_stop(self):
-        self.check_gsr_plot = False
+        self.gsr_timer.stop()
+        self.gsr_sensor.stopAsyncGSR()
+        return
+    
+    def gsr_plot_clear(self):
+        plt = self.plot_gsr.getPlotItem()
+        plt.clear()
+        self.gsr_line_ref = self.plot_gsr.plot(pen=self.pen, symbol='o')
         return
     
     def update_gsr_plot(self):
-        if self.check_gsr_plot:
-            if len(self.gsr_sensor.GSR_list) > 1:
-                if self.gsr_y[-1] != self.gsr_sensor.GSR_list[-1][0]:
-                    y = self.gsr_sensor.GSR_list[-1][0] * 10**6
-                    self.gsr_y.append(y)
-                    self.gsr_x.append(self.gsr_sensor.GSR_list[-1][1])
-            try:
-                self.gsr_line_ref.setData(self.gsr_x, self.gsr_y)
-            except:
-                print(sys.exc_info())
-        else:
-            self.gsr_sensor.stopAsyncGSR()
+        if len(self.gsr_sensor.GSR_list) > 1:
+            if self.gsr_y[-1] != self.gsr_sensor.GSR_list[-1][0]:
+                y = self.gsr_sensor.GSR_list[-1][0] * 10**6
+                self.gsr_y.append(y)
+                self.gsr_x.append(self.gsr_sensor.GSR_list[-1][1])
+        try:
+            self.gsr_line_ref.setData(self.gsr_x, self.gsr_y)
+        except:
+            print(sys.exc_info())
+    
+            
         
 def main():
     app = QApplication(sys.argv)
