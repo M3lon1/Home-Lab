@@ -267,22 +267,36 @@ class MainWindow(QWidget):
         '''
         delete gsr section for dislaying heart rate only
         '''
-        if self.layout_right_top_right.itemAt(0) and self.layout_right_top_left.itemAt(0) is not None:
-            if self.layout_right_bottom_right.itemAt(0) is not None:
+        # Check if both views still exists then delete GSR
+        if (self.layout_right_top_right.itemAt(0) and self.layout_right_top_left.itemAt(0) is not None) and (self.layout_right_bottom_right.itemAt(0) and self.layout_right_bottom_left.itemAt(0) is not None):
+                    self.layout_right_bottom_right.itemAt(0).widget().setParent(None)
+                    self.layout_right_bottom_left.itemAt(0).widget().setParent(None)
+        # If GSR view exist but not HR
+        if ((self.layout_right_top_right.itemAt(0) and self.layout_right_top_left.itemAt(0)) == None) and (self.layout_right_bottom_right.itemAt(0) and self.layout_right_bottom_left.itemAt(0) is not None):
                 self.layout_right_bottom_right.itemAt(0).widget().setParent(None)
-            if self.layout_right_bottom_left.itemAt(0) is not None:
+                self.layout_right_top_right.addWidget(self.plot_hr)
                 self.layout_right_bottom_left.itemAt(0).widget().setParent(None)
+                self.layout_right_top_left.addWidget(self.container_right_hr_menu)
+        else:
+            pass
         return
     
     def gsr_button(self):
         '''
         delete gsr section for dislaying heart rate only
         '''
-        if self.layout_right_bottom_right.itemAt(0) and self.layout_right_bottom_left.itemAt(0) is not None:
-            if self.layout_right_top_right.itemAt(0) is not None:
+        # Check if both view still exists
+        if (self.layout_right_top_right.itemAt(0) and self.layout_right_top_left.itemAt(0) is not None) and (self.layout_right_bottom_right.itemAt(0) and self.layout_right_bottom_left.itemAt(0) is not None):
                 self.layout_right_top_right.itemAt(0).widget().setParent(None)
-            if self.layout_right_top_left.itemAt(0) is not None:
                 self.layout_right_top_left.itemAt(0).widget().setParent(None)
+        # If HR view exist but not GSR
+        if (self.layout_right_bottom_right.itemAt(0) and self.layout_right_bottom_left.itemAt(0)) == None and (self.layout_right_top_right.itemAt(0) and self.layout_right_top_left.itemAt(0) is not None):
+                self.layout_right_top_right.itemAt(0).widget().setParent(None)
+                self.layout_right_bottom_right.addWidget(self.plot_gsr)
+                self.layout_right_top_left.itemAt(0).widget().setParent(None)
+                self.layout_right_bottom_left.addWidget(self.container_right_gsr_menu)
+        else:
+            pass
         return
         
     def dashboard_button(self):
