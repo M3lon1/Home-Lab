@@ -1,10 +1,7 @@
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
-from matplotlib.backends.backend_qt5agg import FigureCanvas
-from graph import *
 import pyqtgraph as pg
-import HeartRateWindow as HrWin
 from pulse.pulsesensor import Pulsesensor
 from grove.grove_gsr_sensor import GroveGSRSensor
 
@@ -39,6 +36,11 @@ class MainWindow(QWidget):
         self.container_right_gsr_menu_layout = QVBoxLayout()
         self.container_right_gsr_menu.setLayout(self.container_right_gsr_menu_layout)
         
+        self.container_right_studies_list = QGroupBox()
+        self.container_right_studies_list.setStyleSheet('QGroupBox {}')
+        self.container_right_studies_list_layout = QVBoxLayout()
+        self.container_right_studies_list.setLayout(self.container_right_studies_list_layout)
+        
         #-----------------------------------------------------------
         # Buttons
             # Dashboard button
@@ -49,6 +51,7 @@ class MainWindow(QWidget):
         QPushButton:pressed {color: #82ECFF; font: bold 20px;}
         ''')
         button_home.clicked.connect(self.dashboard_button)
+            
             # Heart Rate button
         button_hr = QPushButton('Heart Rate')
         button_hr.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
@@ -57,7 +60,8 @@ class MainWindow(QWidget):
         QPushButton:pressed {color: #82ECFF; font: bold 20px;}
         ''')
         button_hr.clicked.connect(self.hr_button)
-            # Heart Rate button
+            
+            # Skin Conductance button
         button_gsr = QPushButton('Skin Conductance')
         button_gsr.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         button_gsr.setStyleSheet('''
@@ -65,7 +69,27 @@ class MainWindow(QWidget):
         QPushButton:pressed {color: #82ECFF; font: bold 20px;}
         ''')
         button_gsr.clicked.connect(self.gsr_button)
+        
+                # Studies button
+        button_studies = QPushButton('Studies')
+        button_studies.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        button_studies.setStyleSheet('''
+        QPushButton {background-color: #1c1c1c; color: #82ECF0 ; border-style: outset; border-width: 0px; border-color: #1c1c1c; font: 20px}
+        QPushButton:pressed {color: #82ECFF; font: bold 20px;}
+        ''')
+        button_studies.clicked.connect(self.studies_button)
+        
+                # Piolt Studie button
+        button_pilot_studies = QPushButton('Pilot Studie')
+        button_pilot_studies.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        button_pilot_studies.setStyleSheet('''
+        QPushButton {background-color: #1c1c1c; color: #82ECF0 ; border-style: outset; border-width: 0px; border-color: #1c1c1c; font: 20px}
+        QPushButton:pressed {color: #82ECFF; font: bold 20px;}
+        ''')
+        #button_gsr.clicked.connect()
+        
         # Plot Buttons
+        
         # Start Heart Rate Plot
         button_start_hr = QPushButton('Start')
         button_start_hr.setStyleSheet('''
@@ -73,6 +97,7 @@ class MainWindow(QWidget):
         QPushButton:pressed {color: #82ECFF; font: bold 20px;}
         ''')
         button_start_hr.clicked.connect(self.hr_plot)
+        
         # Stop Heart Rate Plot
         button_stop_hr = QPushButton('Stop')
         button_stop_hr.setStyleSheet('''
@@ -115,6 +140,7 @@ class MainWindow(QWidget):
         self.container_left_menu_layout.addWidget(button_home)
         self.container_left_menu_layout.addWidget(button_hr)
         self.container_left_menu_layout.addWidget(button_gsr)
+        self.container_left_menu_layout.addWidget(button_studies)
         
         self.container_right_hr_menu_layout.addWidget(button_start_hr)
         self.container_right_hr_menu_layout.addWidget(button_stop_hr)
@@ -123,6 +149,8 @@ class MainWindow(QWidget):
         self.container_right_gsr_menu_layout.addWidget(button_start_gsr)
         self.container_right_gsr_menu_layout.addWidget(button_stop_gsr)
         self.container_right_gsr_menu_layout.addWidget(button_clear_gsr)
+        
+        self.container_right_studies_list_layout.addWidget(button_pilot_studies)
         #-----------------------------------------------------------
         # PsyMex-2 icon
         psymex_label = QLabel('<h1>PsyMex-2</h1>')
@@ -175,6 +203,7 @@ class MainWindow(QWidget):
         # Live Plot
         self.pen = pg.mkPen(color=(255,255,255), width=2)
         self.plot_hr = pg.PlotWidget(title='Heart Rate')
+        self.plot_hr.setAccessibleName('plot_hr')
         self.plot_hr.setBackground('#212121')
         self.plot_hr.setLabel('left', 'BPM')
         self.plot_hr.setLabel('bottom', 'Time (s)')
@@ -183,6 +212,7 @@ class MainWindow(QWidget):
         self.layout_right_top_right.addWidget(self.plot_hr)
         
         self.plot_gsr = pg.PlotWidget(title='Skin Conductance')
+        self.plot_gsr.setAccessibleName('plot_gsr')
         self.plot_gsr.setBackground('#212121')
         self.plot_gsr.setLabel('left', 'Micro  Siemens')
         self.plot_gsr.setLabel('bottom', 'Time (s)')
@@ -201,7 +231,7 @@ class MainWindow(QWidget):
         self.hr_y = [0]
         self.pulse_sensor = Pulsesensor()
         self.pulse_sensor.startAsyncBPM()
-        self.hr_timer = QtCore.QTimer()
+        self.hr_timer = QTimer()
         self.hr_timer.timeout.connect(self.update_hr_plot)
         self.hr_timer.start(500)
         return
@@ -232,7 +262,7 @@ class MainWindow(QWidget):
         self.gsr_y = [0]
         self.gsr_sensor = GroveGSRSensor()
         self.gsr_sensor.startAsyncGSR()
-        self.gsr_timer = QtCore.QTimer()
+        self.gsr_timer = QTimer()
         self.gsr_timer.timeout.connect(self.update_gsr_plot)
         self.gsr_timer.start(500)
         return
@@ -259,9 +289,6 @@ class MainWindow(QWidget):
         except:
             print(sys.exc_info())
     
-    def show_hr_window(self):
-        self.hr_window = HrWin.HeartRateWindow()
-        self.hr_window.show()
     
     def hr_button(self):
         '''
@@ -277,6 +304,11 @@ class MainWindow(QWidget):
                 self.layout_right_top_right.addWidget(self.plot_hr)
                 self.layout_right_bottom_left.itemAt(0).widget().setParent(None)
                 self.layout_right_top_left.addWidget(self.container_right_hr_menu)
+        # Check if studies menu is shown
+        if (self.layout_right_bottom_right.itemAt(0) and self.layout_right_bottom_right.itemAt(0).widget().accessibleName() != 'plot_gsr'):
+            self.layout_right_bottom_right.itemAt(0).widget().setParent(None)
+            self.layout_right_top_right.addWidget(self.plot_hr)
+            self.layout_right_top_left.addWidget(self.container_right_hr_menu)
         else:
             pass
         return
@@ -287,14 +319,20 @@ class MainWindow(QWidget):
         '''
         # Check if both view still exists
         if (self.layout_right_top_right.itemAt(0) and self.layout_right_top_left.itemAt(0) is not None) and (self.layout_right_bottom_right.itemAt(0) and self.layout_right_bottom_left.itemAt(0) is not None):
-                self.layout_right_top_right.itemAt(0).widget().setParent(None)
-                self.layout_right_top_left.itemAt(0).widget().setParent(None)
+            self.layout_right_top_right.itemAt(0).widget().setParent(None)
+            self.layout_right_top_left.itemAt(0).widget().setParent(None)
         # If HR view exist but not GSR
         if (self.layout_right_bottom_right.itemAt(0) and self.layout_right_bottom_left.itemAt(0)) == None and (self.layout_right_top_right.itemAt(0) and self.layout_right_top_left.itemAt(0) is not None):
-                self.layout_right_top_right.itemAt(0).widget().setParent(None)
-                self.layout_right_bottom_right.addWidget(self.plot_gsr)
-                self.layout_right_top_left.itemAt(0).widget().setParent(None)
-                self.layout_right_bottom_left.addWidget(self.container_right_gsr_menu)
+            self.layout_right_top_right.itemAt(0).widget().setParent(None)
+            self.layout_right_bottom_right.addWidget(self.plot_gsr)
+            self.layout_right_top_left.itemAt(0).widget().setParent(None)
+            self.layout_right_bottom_left.addWidget(self.container_right_gsr_menu)
+        # Check if studies menu is shown
+        if (self.layout_right_bottom_right.itemAt(0) and self.layout_right_bottom_right.itemAt(0).widget().accessibleName() != 'plot_gsr'):
+            self.layout_right_bottom_right.itemAt(0).widget().setParent(None)
+            self.layout_right_bottom_right.addWidget(self.plot_gsr)
+            self.layout_right_bottom_left.addWidget(self.container_right_gsr_menu)
+        
         else:
             pass
         return
@@ -302,7 +340,11 @@ class MainWindow(QWidget):
     def dashboard_button(self):
         '''
         todo: write generic version for adding/removing widgets/layouts
+        Checks which layout is currently displayed 
         '''
+        if self.layout_right_bottom_right.itemAt(0):
+            if self.layout_right_bottom_right.itemAt(0).widget().accessibleName() != 'plot_gsr':
+                self.layout_right_bottom_right.itemAt(0).widget().setParent(None)
         if self.layout_right_bottom_right.itemAt(0) is None:
             self.layout_right_bottom_right.addWidget(self.plot_gsr)
         if  self.layout_right_bottom_left.itemAt(0) is None:
@@ -312,6 +354,29 @@ class MainWindow(QWidget):
         if self.layout_right_top_left.itemAt(0) is None:
             self.layout_right_top_left.addWidget(self.container_right_hr_menu)
         return
+    
+    def studies_button(self):
+        '''
+        shows implemented studies
+        '''
+        # Check if both view still exists then clear all but right bottom corner
+        if (self.layout_right_top_right.itemAt(0) and self.layout_right_top_left.itemAt(0) is not None) and (self.layout_right_bottom_right.itemAt(0) and self.layout_right_bottom_left.itemAt(0) is not None):
+                self.layout_right_top_right.itemAt(0).widget().setParent(None)
+                self.layout_right_top_left.itemAt(0).widget().setParent(None)
+                self.layout_right_bottom_left.itemAt(0).widget().setParent(None)
+                self.layout_right_bottom_right.itemAt(0).widget().setParent(None)
+                self.layout_right_bottom_right.addWidget(self.container_right_studies_list)
+        # If HR view exist but not GSR
+        if (self.layout_right_bottom_right.itemAt(0) and self.layout_right_bottom_left.itemAt(0)) == None and (self.layout_right_top_right.itemAt(0) and self.layout_right_top_left.itemAt(0) is not None):
+                self.layout_right_top_right.itemAt(0).widget().setParent(None)
+                self.layout_right_bottom_right.addWidget(self.container_right_studies_list)
+                self.layout_right_top_left.itemAt(0).widget().setParent(None)
+        # If GSR view exist but not HR
+        if ((self.layout_right_top_right.itemAt(0) and self.layout_right_top_left.itemAt(0)) == None) and (self.layout_right_bottom_right.itemAt(0) and self.layout_right_bottom_left.itemAt(0) is not None):
+                self.layout_right_bottom_right.itemAt(0).widget().setParent(None)
+                self.layout_right_bottom_right.addWidget(self.container_right_studies_list)
+                self.layout_right_bottom_left.itemAt(0).widget().setParent(None)
+                
         
 def main():
     app = QApplication(sys.argv)
