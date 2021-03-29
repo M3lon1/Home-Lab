@@ -86,7 +86,7 @@ class MainWindow(QWidget):
         QPushButton {background-color: #1c1c1c; color: #82ECF0 ; border-style: outset; border-width: 0px; border-color: #1c1c1c; font: 20px}
         QPushButton:pressed {color: #82ECFF; font: bold 20px;}
         ''')
-        #button_gsr.clicked.connect()
+        button_pilot_studies.clicked.connect(self.start_pilot_studie)
         
         # Plot Buttons
         
@@ -220,7 +220,8 @@ class MainWindow(QWidget):
         self.gsr_line_ref = self.plot_gsr.plot(pen=self.pen, symbol='o')
         self.layout_right_bottom_right.addWidget(self.plot_gsr)
         #-----------------------------------------------------------
-    
+        
+        self.show()
     
     def hr_plot(self):
         '''
@@ -377,11 +378,13 @@ class MainWindow(QWidget):
                 self.layout_right_bottom_right.addWidget(self.container_right_studies_list)
                 self.layout_right_bottom_left.itemAt(0).widget().setParent(None)
                 
+    def start_pilot_studie(self):
+        self.close()
+        pass
         
 def main():
     app = QApplication(sys.argv)
     GUI = MainWindow()
-    GUI.show()
     sys.exit(app.exec_())
 
 if __name__ == "__main__":
