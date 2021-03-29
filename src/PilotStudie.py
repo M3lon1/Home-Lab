@@ -7,15 +7,11 @@ from grove.grove_gsr_sensor import GroveGSRSensor
 class PilotStudie(QMainWindow):
     def __init__(self):
         super().__init__()
-        
+        self.initUI()
+    
+    def initUI(self):
         self.setWindowTitle("PsyMex-2 Pilot Studie")
-        
-        # move to center of screen
-        qtRectangle = self.frameGeometry()
-        centerPoint = QDesktopWidget().availableGeometry().center()
-        qtRectangle.moveCenter(centerPoint)
-        self.move(qtRectangle.center)
-        
+
         # Labels
         label_welcome = QLabel("Wilkommen zur PsyMex-2 Pilot Studie!")
         label_welcome.setAlignment(Qt.AlignCenter)
@@ -29,9 +25,18 @@ class PilotStudie(QMainWindow):
         widget.setLayout(vbox)
         
         self.setCentralWidget(widget)
+        self.center()
         self.show()
-
-
+    
+    
+    def center(self):
+        '''
+        move window to screen center
+        '''
+        qr = self.frameGeometry()
+        cp = QDesktopWidget().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.move(qr.topLeft())
 
 def main():
     app = QApplication(sys.argv)
