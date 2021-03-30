@@ -1,8 +1,10 @@
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 from pulse.pulsesensor import Pulsesensor
 from grove.grove_gsr_sensor import GroveGSRSensor
+from ScreenBaseline import *
 
 class PilotStudie(QMainWindow):
     def __init__(self):
@@ -38,17 +40,18 @@ class PilotStudie(QMainWindow):
         QLabel {color: white}
         ''')
         # Inputs
-        input_name = QLineEdit()
-        input_name.setStyleSheet('''
+        self.input_name = QLineEdit()
+        self.input_name.setStyleSheet('''
         QLineEdit {background-color: white}
         ''')
-        input_age = QLineEdit()
-        input_age.setStyleSheet('''
+        self.input_age = QLineEdit()
+        self.input_age.setValidator(QIntValidator())
+        self.input_age.setStyleSheet('''
         QLineEdit {background-color: white}
         ''')
-        input_gender = QComboBox()
-        input_gender.addItems(["Weiblich", "Männlich", "Divers"])
-        input_gender.setStyleSheet('''
+        self.input_sex = QComboBox()
+        self.input_sex.addItems(["Weiblich", "Männlich", "Divers"])
+        self.input_sex.setStyleSheet('''
         QComboBox {color: #1c1c1c}
         ''')
         # Start button
@@ -66,9 +69,9 @@ class PilotStudie(QMainWindow):
         central_box.addWidget(label_welcome,1)
         central_box.addWidget(label_infos,1)
         
-        fo.addRow(label_name, input_name)
-        fo.addRow(label_age, input_age)
-        fo.addRow(label_sex, input_gender)
+        fo.addRow(label_name, self.input_name)
+        fo.addRow(label_age, self.input_age)
+        fo.addRow(label_sex, self.input_sex)
         fo.addRow(start)
 
         central_box.addLayout(fo, 5)
@@ -92,7 +95,7 @@ class PilotStudie(QMainWindow):
         
         self.setCentralWidget(widget)
         self.center()
-        self.show()
+        self.showMaximized()
     
     
     def center(self):
@@ -105,7 +108,12 @@ class PilotStudie(QMainWindow):
         self.move(qr.topLeft())
     
     def start_studie(self):
-        pass
+        self.close()
+        name = self.input_name.text()
+        age = self.input_age.text()
+        sex = self.input_sex.currentText()
+        self.screen_baseline = ScreenBaseline(self.input_name.text(), self.input_age.text(), self.input_sex.currentText())
+        
     
 def main():
     app = QApplication(sys.argv)
