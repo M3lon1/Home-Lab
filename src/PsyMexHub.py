@@ -4,6 +4,7 @@ from PyQt5.QtCore import *
 import pyqtgraph as pg
 from pulse.pulsesensor import Pulsesensor
 from grove.grove_gsr_sensor import GroveGSRSensor
+from PilotStudie import *
 
 class MainWindow(QWidget):
     '''
@@ -380,7 +381,8 @@ class MainWindow(QWidget):
                 
     def start_pilot_studie(self):
         self.close()
-        pass
+        self.ps = PilotStudie()
+        
         
 def main():
     app = QApplication(sys.argv)
