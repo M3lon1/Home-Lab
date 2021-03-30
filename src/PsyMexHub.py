@@ -222,7 +222,7 @@ class MainWindow(QWidget):
         self.layout_right_bottom_right.addWidget(self.plot_gsr)
         #-----------------------------------------------------------
         
-        self.show()
+        self.showMaximized()
     
     def hr_plot(self):
         '''

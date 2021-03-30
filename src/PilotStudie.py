@@ -4,7 +4,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from pulse.pulsesensor import Pulsesensor
 from grove.grove_gsr_sensor import GroveGSRSensor
-from ScreenBaseline import *
+from ScreenInstructions import *
 
 class PilotStudie(QMainWindow):
     def __init__(self):
@@ -55,7 +55,7 @@ class PilotStudie(QMainWindow):
         QComboBox {color: #1c1c1c}
         ''')
         # Start button
-        start = QPushButton("Start")
+        start = QPushButton("Weiter")
         start.setStyleSheet('''
         QPushButton {margin: 20 200 50 200}
         ''')
@@ -64,6 +64,7 @@ class PilotStudie(QMainWindow):
         # Layout
         hbox = QHBoxLayout()
         central_box = QVBoxLayout()
+        next_box = QVBoxLayout()
         fo = QFormLayout()
         
         central_box.addWidget(label_welcome,1)
@@ -72,9 +73,10 @@ class PilotStudie(QMainWindow):
         fo.addRow(label_name, self.input_name)
         fo.addRow(label_age, self.input_age)
         fo.addRow(label_sex, self.input_sex)
-        fo.addRow(start)
+        next_box.addWidget(start)
 
         central_box.addLayout(fo, 5)
+        central_box.addLayout(next_box, 1)
         
         # Layout margins
         central_box.setContentsMargins(50,5,50,5)
@@ -109,10 +111,7 @@ class PilotStudie(QMainWindow):
     
     def start_studie(self):
         self.close()
-        name = self.input_name.text()
-        age = self.input_age.text()
-        sex = self.input_sex.currentText()
-        self.screen_baseline = ScreenBaseline(self.input_name.text(), self.input_age.text(), self.input_sex.currentText())
+        self.screen_instructions = ScreenInstructions(self.input_name.text(), self.input_age.text(), self.input_sex.currentText())
         
     
 def main():
@@ -122,3 +121,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
