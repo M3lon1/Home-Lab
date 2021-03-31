@@ -110,9 +110,8 @@ class PilotStudie(QMainWindow):
         self.move(qr.topLeft())
     
     def start_studie(self):
-        self.close()
         self.screen_instructions = ScreenInstructions(self.input_name.text(), self.input_age.text(), self.input_sex.currentText())
-        
+        self.close()
     
 def main():
     app = QApplication(sys.argv)

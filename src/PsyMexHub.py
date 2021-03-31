@@ -13,7 +13,6 @@ class MainWindow(QWidget):
     def __init__(self):
         '''
         Initializes MainWindow (PsyMexHub)
-        
         '''
         super().__init__()
         self.setWindowTitle('PsyMex-2')
@@ -380,9 +379,8 @@ class MainWindow(QWidget):
                 self.layout_right_bottom_left.itemAt(0).widget().setParent(None)
                 
     def start_pilot_studie(self):
-        self.close()
         self.ps = PilotStudie()
-        
+        self.close()
         
 def main():
     app = QApplication(sys.argv)

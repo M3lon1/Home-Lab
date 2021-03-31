@@ -29,31 +29,26 @@ class ScreenBaseline(QMainWindow):
         ''')
         label_info_2.setAlignment(Qt.AlignCenter)
         
+        # Next button
+        next_button = QPushButton("Weiter")
+        next_button.setStyleSheet('''
+        QPushButton {margin: 20 200 50 200}
+        ''')
+        next_button.clicked.connect(self.next_page)
+        
         # Layout
-        hbox = QHBoxLayout()
-        central_box = QVBoxLayout()
+        grid = QGridLayout()
+        # Left/Right/Bottom layout just used for relative size of central box
         
         # Central box where the content is stored
-        central_box.addWidget(label_info_1,1)
-        central_box.addWidget(label_info_2)
+        grid.addWidget(label_info_1,0,1,1,3)
+        grid.addWidget(label_info_2,1,1,1,3)
         
-        # Bottom widget just for relative size
-        bottom_widget = QWidget()
-        central_box.addWidget(bottom_widget, 3)
-        
-        # Layout margins
-        central_box.setContentsMargins(50,5,50,5)
-        
-        # Left/Right/Bottom layout just used for relative size of central box
-        l_layout= QVBoxLayout()
-        r_layout = QVBoxLayout()
-        hbox.addLayout(l_layout,1)
-        hbox.addLayout(central_box,2)
-        hbox.addLayout(r_layout,1)
+        grid.addWidget(next_button,3,2,5,1)
         
         # Central Widget
         widget = QWidget()
-        widget.setLayout(hbox)
+        widget.setLayout(grid)
         widget.setStyleSheet('''
         QWidget {background-color: #1c1c1c}
         ''')

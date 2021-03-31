@@ -14,7 +14,7 @@ class ScreenInstructions(QMainWindow):
         self.initUI()
     
     def initUI(self):
-        self.setWindowTitle("PsyMex-2 Pilot Studie Baseline")
+        self.setWindowTitle("PsyMex-2 Pilot Studie Instructuions")
         
         
         # Labels
@@ -75,8 +75,6 @@ class ScreenInstructions(QMainWindow):
         grid.addWidget(label_info_6,5,1,1,3)
         grid.addWidget(next_button,6,2,5,1)
         
-        # Bottom widget just for relative size
-        bottom_widget = QWidget()
     
         # Central Widget
         widget = QWidget()

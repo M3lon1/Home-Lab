@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from pulse.pulsesensor import Pulsesensor
 from grove.grove_gsr_sensor import GroveGSRSensor
+from ScreenBaseline import *
 
 class ScreenInstructions2(QMainWindow):
     def __init__(self, name, age, sex):
@@ -13,7 +14,7 @@ class ScreenInstructions2(QMainWindow):
         self.initUI()
     
     def initUI(self):
-        self.setWindowTitle("PsyMex-2 Pilot Studie Baseline")
+        self.setWindowTitle("PsyMex-2 Pilot Studie Instructions")
         
         
         # Labels
@@ -74,7 +75,10 @@ class ScreenInstructions2(QMainWindow):
         self.showMaximized()
     
     def next_page(self):
-        pass
+        self.next_screen = ScreenBaseline(self.name, self.age, self.sex)
+        self.close()
+        
+        
 
 def main():
     app = QApplication(sys.argv)
