@@ -134,8 +134,9 @@ class PilotStudie(QMainWindow):
         if sex == "Männlich":
             s = "1"
         if sex == "Divers":
-            s == "2"
-        identifier = str(self.input_test_nr) + s + str(self.input_age)
+            s = "2"
+        identifier = str(self.input_test_nr.text()) + s + str(self.input_age.text())
+        print(identifier)
         return identifier
     
 def main():

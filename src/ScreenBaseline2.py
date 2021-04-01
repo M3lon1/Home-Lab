@@ -76,7 +76,7 @@ class ScreenBaseline2(QMainWindow):
         Wait for 30 seconds then save the sensor list to csv file
         '''
         self.i += 1
-        if self.i == 3:
+        if self.i == 30:
             print("saving to " + "results/" + self.identifier + self.nr)
             with open("results/" + self.identifier + self.nr + "1", 'w', newline='') as myfile:
                 wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
