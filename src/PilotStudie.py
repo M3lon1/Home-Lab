@@ -4,7 +4,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from pulse.pulsesensor import Pulsesensor
 from grove.grove_gsr_sensor import GroveGSRSensor
-from ScreenInstructions import *
+from ScreenSensorsGSR import *
 
 class PilotStudie(QMainWindow):
     def __init__(self):
@@ -39,6 +39,10 @@ class PilotStudie(QMainWindow):
         label_sex.setStyleSheet('''
         QLabel {color: white}
         ''')
+        label_test_nr = QLabel("Test Nummer")
+        label_test_nr.setStyleSheet('''
+        QLabel {color: white}
+        ''')
         # Inputs
         self.input_name = QLineEdit()
         self.input_name.setStyleSheet('''
@@ -53,6 +57,11 @@ class PilotStudie(QMainWindow):
         self.input_sex.addItems(["Weiblich", "Männlich", "Divers"])
         self.input_sex.setStyleSheet('''
         QComboBox {color: #1c1c1c}
+        ''')
+        self.input_test_nr = QLineEdit()
+        self.input_test_nr.setValidator(QIntValidator())
+        self.input_test_nr.setStyleSheet('''
+        QLineEdit {background-color: white}
         ''')
         # Start button
         start = QPushButton("Weiter")
@@ -73,6 +82,7 @@ class PilotStudie(QMainWindow):
         fo.addRow(label_name, self.input_name)
         fo.addRow(label_age, self.input_age)
         fo.addRow(label_sex, self.input_sex)
+        fo.addRow(label_test_nr, self.input_test_nr)
         next_box.addWidget(start)
 
         central_box.addLayout(fo, 5)
@@ -110,8 +120,23 @@ class PilotStudie(QMainWindow):
         self.move(qr.topLeft())
     
     def start_studie(self):
-        self.screen_instructions = ScreenInstructions(self.input_name.text(), self.input_age.text(), self.input_sex.currentText())
+        i = self.create_string()
+        self.screen_instructions = ScreenSensorsGSR(self.input_name.text(), i)
         self.close()
+        
+    def create_string(self):
+        '''
+        creates string used to save/identify participant
+        '''
+        sex = self.input_sex.currentText()
+        if sex == "Weiblich":
+            s = "0"
+        if sex == "Männlich":
+            s = "1"
+        if sex == "Divers":
+            s == "2"
+        identifier = str(self.input_test_nr) + s + str(self.input_age)
+        return identifier
     
 def main():
     app = QApplication(sys.argv)

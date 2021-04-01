@@ -3,13 +3,13 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from pulse.pulsesensor import Pulsesensor
 from grove.grove_gsr_sensor import GroveGSRSensor
+from ScreenBaseline2 import *
 
 class ScreenBaseline(QMainWindow):
-    def __init__(self, name, age, sex):
+    def __init__(self, name, identifier):
         super().__init__()
         self.name = name
-        self.age = age
-        self.sex = sex
+        self.identifier = identifier
         self.initUI()
     
     def initUI(self):
@@ -43,7 +43,6 @@ class ScreenBaseline(QMainWindow):
         # Central box where the content is stored
         grid.addWidget(label_info_1,0,1,1,3)
         grid.addWidget(label_info_2,1,1,1,3)
-        
         grid.addWidget(next_button,3,2,5,1)
         
         # Central Widget
@@ -56,11 +55,12 @@ class ScreenBaseline(QMainWindow):
         self.showMaximized()
     
     def next_page(self):
-        pass
+        self.next_screen = ScreenBaseline2(self.name, self.identifier)
+        self.close()
 
 def main():
     app = QApplication(sys.argv)
-    info = ScreenBaseline("Max Mustermann", 21, "Männlich")
+    info = ScreenBaseline("Max Mustermann","1234")
     sys.exit(app.exec_())
 
 if __name__ == "__main__":

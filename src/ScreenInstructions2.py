@@ -6,11 +6,10 @@ from grove.grove_gsr_sensor import GroveGSRSensor
 from ScreenBaseline import *
 
 class ScreenInstructions2(QMainWindow):
-    def __init__(self, name, age, sex):
+    def __init__(self, name, identifier):
         super().__init__()
         self.name = name
-        self.age = age
-        self.sex = sex
+        self.identifier = identifier
         self.initUI()
     
     def initUI(self):
@@ -75,14 +74,14 @@ class ScreenInstructions2(QMainWindow):
         self.showMaximized()
     
     def next_page(self):
-        self.next_screen = ScreenBaseline(self.name, self.age, self.sex)
+        self.next_screen = ScreenBaseline(self.name, self.identifier)
         self.close()
         
         
 
 def main():
     app = QApplication(sys.argv)
-    info = ScreenInstructions2("Max Mustermann", 21, "Männlich")
+    info = ScreenInstructions2("Max Mustermann","123455")
     sys.exit(app.exec_())
 
 if __name__ == "__main__":

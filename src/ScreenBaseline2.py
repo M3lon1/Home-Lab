@@ -7,35 +7,47 @@ import time as t
 import csv
 
 class ScreenBaseline2(QMainWindow):
-    def __init__(self, name, age, sex):
+    def __init__(self, name, identifier):
         super().__init__()
         self.name = name
-        self.age = age
-        self.sex = sex
+        self.identifier = identifier
         self.initUI()
+        self.nr = "00"
     
     def initUI(self):
         self.setWindowTitle("PsyMex-2 Pilot Studie Baseline")
         self.i = 0
         
         # Labels
-        label_info_1 = QLabel("+")
-        label_info_1.setStyleSheet('''
+        self.label_info_1 = QLabel("+")
+        self.label_info_1.setStyleSheet('''
         QLabel {font: bold 50px; color: white}
         ''')
-        label_info_1.setAlignment(Qt.AlignCenter)
+        self.label_info_1.setAlignment(Qt.AlignCenter)
         
+        self.label_info_2 = QLabel("Baseline Messung erfolgreich")
+        self.label_info_2.setStyleSheet('''
+        QLabel {font: bold 50px; color: white}
+        ''')
+        self.label_info_2.setAlignment(Qt.AlignCenter)
+        
+        # Next button
+        self.next_button = QPushButton("Weiter")
+        self.next_button.setStyleSheet('''
+        QPushButton {margin: 20 200 50 200}
+        ''')
+        self.next_button.clicked.connect(self.next_page)
         
         # Layout
-        grid = QGridLayout()
+        self.grid = QGridLayout()
         # Left/Right/Bottom layout just used for relative size of central box
         
         # Central box where the content is stored
-        grid.addWidget(label_info_1,0,1,1,3)
+        self.grid.addWidget(self.label_info_1,0,1,1,3)
         
         # Central Widget
         widget = QWidget()
-        widget.setLayout(grid)
+        widget.setLayout(self.grid)
         widget.setStyleSheet('''
         QWidget {background-color: #1c1c1c}
         ''')
@@ -50,7 +62,6 @@ class ScreenBaseline2(QMainWindow):
         '''
         
         '''
-        print("started")
         self.gsr_sensor = GroveGSRSensor()
         self.gsr_sensor.startAsyncGSR()
         self.pulse_sensor = Pulsesensor()
@@ -64,23 +75,27 @@ class ScreenBaseline2(QMainWindow):
         '''
         Wait for 30 seconds then save the sensor list to csv file
         '''
-        print(self.i)
         self.i += 1
         if self.i == 3:
-            print('saving')
-            with open(self.name + str(self.age) + self.sex + "_gsr", 'w', newline='') as myfile:
+            print("saving to " + "results/" + self.identifier + self.nr)
+            with open("results/" + self.identifier + self.nr + "1", 'w', newline='') as myfile:
                 wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
                 wr.writerow(self.gsr_sensor.GSR_list)
-            with open(self.name + str(self.age) + self.sex + "_hr", 'w', newline='') as myfile:
+            with open("results/" + self.identifier + self.nr + "0", 'w', newline='') as myfile:
                 wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
                 wr.writerow(self.pulse_sensor.BPM_list)
             self.gsr_sensor.stopAsyncGSR()
             self.qt.stop()
+            self.label_info_1.setParent(None)
+            self.grid.addWidget(self.label_info_2,0,1,1,1)
+            self.grid.addWidget(self.next_button,1,1,1,1)
+            self.grid.addWidget(QWidget(),1,0,1,1)
+            self.grid.addWidget(QWidget(),1,2,1,1)
             return
 
 def main():
     app = QApplication(sys.argv)
-    info = ScreenBaseline2("Max Mustermann", 21, "Männlich")
+    info = ScreenBaseline2("Max Mustermann", "123897")
     sys.exit(app.exec_())
 
 if __name__ == "__main__":
