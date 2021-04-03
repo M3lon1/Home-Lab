@@ -85,6 +85,7 @@ class ScreenBaseline2(QMainWindow):
                 wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
                 wr.writerow(self.pulse_sensor.BPM_list)
             self.gsr_sensor.stopAsyncGSR()
+            self.pulse_sensor.stopAsyncBPM()
             self.qt.stop()
             self.label_info_1.setParent(None)
             self.grid.addWidget(self.label_info_2,0,1,1,1)
