@@ -5,6 +5,10 @@ from pulse.pulsesensor import Pulsesensor
 from grove.grove_gsr_sensor import GroveGSRSensor
 from ScreenTask11 import *
 from ScreenTask12 import *
+from ScreenTask21 import *
+from ScreenTask22 import *
+from ScreenTask31 import *
+from ScreenTask32 import *
 import time as t
 import csv
 import random
@@ -15,7 +19,7 @@ class ScreenBaseline2(QMainWindow):
         self.name = name
         self.identifier = identifier
         self.initUI()
-        self.tasks = ["ScreenTask11", "ScreenTask12"] #, "ScreenTask21", "ScreenTask22", "ScreenTask31", "ScreenTask32"]
+        self.tasks = ["ScreenTask11", "ScreenTask12", "ScreenTask21", "ScreenTask22", "ScreenTask31", "ScreenTask32"]
         self.nr = "00"
     
     def initUI(self):

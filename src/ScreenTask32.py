@@ -6,7 +6,8 @@ from grove.grove_gsr_sensor import GroveGSRSensor
 from PyQt5.QtGui import *
 import csv
 import random
-from ScreenInstructions2 import *
+from ScreenEnd import *
+
 
 class ScreenTask32(QMainWindow):
     def __init__(self, name, identifier, tasks):
@@ -14,7 +15,7 @@ class ScreenTask32(QMainWindow):
         self.name = name # name of participant
         self.identifier = identifier # string for saving the files
         self.nr = "32" # task number, first digit = task second digit = hard/easy 1 = easy 2 = hard
-        self.tasks = tasks # list of tasks to still perform 
+        self.tasks = tasks # list of tasks to still perform
         self.initUI()
     
     def initUI(self):
@@ -91,8 +92,6 @@ class ScreenTask32(QMainWindow):
         pics = ["A041.bmp", "A100.bmp", "H122.bmp"]
         r = random.randint(0, len(pics) - 1)
         used_pic = pics[r]
-        print(used_pic)
-        print("r",r)
         self.label_pic = QLabel()
         pixmap = QPixmap('pic/used/' +  used_pic)
         self.label_pic.setPixmap(pixmap)
@@ -143,7 +142,7 @@ class ScreenTask32(QMainWindow):
         Function to chose what page is going to be next.
         Picks from self.tasks
         '''
-        # Before continue get the answer for the current task
+        # Before continue get the answer for the current task and save it 
         if self.input_answer.currentText() != '':
             with open("results/" + self.identifier + self.nr + "2", 'w', newline='') as myfile:
                 wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
@@ -153,19 +152,30 @@ class ScreenTask32(QMainWindow):
                 for item in self.tasks:
                     # Check if the corresponding hard/easy task is still available
                     if "ScreenTask" + self.nr[0] == item[0:-1]:
-                        c = globals()[item]
+                        class_name = item
+                        module = __import__(item)
+                        class_ = getattr(module, class_name)
+                        self.instance = class_(self.name, self.identifier, self.tasks)
                         self.tasks.remove(item)
-                    # Else pick random next task 
-                    else:                
-                        i = random.randint(0, len(self.tasks) - 1)
-                        c = globals()[self.tasks[i]]
-                        del self.tasks[i]
-                self.instance = c(self.name, self.identifier, self.tasks)
+                        self.close()
+                        return
+                # If task is not found, pick a random next task    
+                i = random.randint(0, len(self.tasks) - 1)
+                class_name = self.tasks[i]
+                module = __import__(self.tasks[i])
+                class_ = getattr(module, class_name)
+                self.instance = class_(self.name, self.identifier, self.tasks)
+                del self.tasks[i]
                 self.close()
+                return
             else:
-                self.instance = ScreenEnd(self.name)
+                # If there are no tasks left, show end screen
+                module = __import__("ScreenEnd")
+                class_ = getattr(module, "ScreenEnd")
+                self.instance = class_(self.name)
                 self.close()
         else:
+            # if there is no input from the user just wait for it
             pass
     
     def count(self):
@@ -191,15 +201,14 @@ class ScreenTask32(QMainWindow):
         if self.i < 20:
             # count down for preparation time
             self.label_info_4.setText(str(20 - self.i))
-        if self.i == 5:
+        if self.i == 2:
             # Remove all Widgets currently displayed. Task starts
             self.label_info_1.setParent(None)
             self.label_info_2.setParent(None)
             self.label_info_3.setParent(None)
             self.label_info_4.setParent(None)
             self.grid.addWidget(self.label_pic, 4,1,1,3)
-            print(self.i)
-        if self.i == 7:
+        if self.i == 5 :
             self.grid.addWidget(self.label_info_6, 0,1,1,1,Qt.AlignCenter)
             self.grid.addWidget(self.label_info_7, 1,1,1,1,Qt.AlignCenter)
             self.grid.addWidget(self.likert, 2,1,1,1, Qt.AlignCenter)

@@ -6,6 +6,18 @@ from grove.grove_gsr_sensor import GroveGSRSensor
 from PyQt5.QtGui import *
 import csv
 from ScreenInstructions2 import *
+if "ScreenTask11" not in sys.modules:
+    from ScreenTask11 import *
+if "ScreenTask12" not in sys.modules:
+    from ScreenTask12 import *    
+if "ScreenTask21" not in sys.modules:
+    from ScreenTask21 import *
+if "ScreenTask22" not in sys.modules:
+    from ScreenTask22 import *
+if "ScreenTask31" not in sys.modules:
+    from ScreenTask31 import *
+if "ScreenTask32" not in sys.modules:
+    from ScreenTask32 import *
 
 class ScreenEnd(QMainWindow):
     def __init__(self, name):
