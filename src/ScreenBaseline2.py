@@ -3,8 +3,11 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from pulse.pulsesensor import Pulsesensor
 from grove.grove_gsr_sensor import GroveGSRSensor
+from ScreenTask11 import *
+from ScreenTask12 import *
 import time as t
 import csv
+import random
 
 class ScreenBaseline2(QMainWindow):
     def __init__(self, name, identifier):
@@ -12,6 +15,7 @@ class ScreenBaseline2(QMainWindow):
         self.name = name
         self.identifier = identifier
         self.initUI()
+        self.tasks = ["ScreenTask11", "ScreenTask12"] #, "ScreenTask21", "ScreenTask22", "ScreenTask31", "ScreenTask32"]
         self.nr = "00"
     
     def initUI(self):
@@ -54,10 +58,17 @@ class ScreenBaseline2(QMainWindow):
         self.setCentralWidget(widget)
         self.start_measurement()
         self.showMaximized()
-        
+    
     def next_page(self):
-        pass
-
+        '''
+        pic a random class name from the self.tasks list, remove it from the list then instanciate it
+        '''
+        i = random.randint(0, len(self.tasks) - 1)
+        c = globals()[self.tasks[i]]
+        del self.tasks[i]
+        self.instance = c(self.name, self.identifier, self.tasks)
+        self.close()        
+        
     def start_measurement(self):
         '''
         
@@ -76,7 +87,7 @@ class ScreenBaseline2(QMainWindow):
         Wait for 30 seconds then save the sensor list to csv file
         '''
         self.i += 1
-        if self.i == 30:
+        if self.i == 5:
             print("saving to " + "results/" + self.identifier + self.nr)
             with open("results/" + self.identifier + self.nr + "1", 'w', newline='') as myfile:
                 wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
