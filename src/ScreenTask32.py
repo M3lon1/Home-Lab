@@ -5,29 +5,30 @@ from pulse.pulsesensor import Pulsesensor
 from grove.grove_gsr_sensor import GroveGSRSensor
 from PyQt5.QtGui import *
 import csv
+import random
 from ScreenInstructions2 import *
 
-class ScreenTask21(QMainWindow):
+class ScreenTask32(QMainWindow):
     def __init__(self, name, identifier, tasks):
         super().__init__()
         self.name = name # name of participant
         self.identifier = identifier # string for saving the files
-        self.nr = "21" # task number, first digit = task second digit = hard/easy 1 = easy 2 = hard
+        self.nr = "32" # task number, first digit = task second digit = hard/easy 1 = easy 2 = hard
         self.tasks = tasks # list of tasks to still perform 
         self.initUI()
     
     def initUI(self):
-        self.setWindowTitle("PsyMex-2 Pilot Aufgabe 1 Leicht")
+        self.setWindowTitle("PsyMex-2 Pilot Aufgabe 3 Schwer")
         self.i = 0 # counter for preparation time & execution time
         
         # Labels
-        self.label_info_1 = QLabel("Aufgabe 2 Leicht")
+        self.label_info_1 = QLabel("Aufgabe 3 Schwer")
         self.label_info_1.setStyleSheet('''
         QLabel {font: bold 30px; color: white}
         ''')
         self.label_info_1.setAlignment(Qt.AlignCenter)
         
-        self.label_info_2 = QLabel("Bitte öffne und schließe deine Hand schnell im Wechsel")
+        self.label_info_2 = QLabel("Bitte schaue dir das folgende Bild an")
         self.label_info_2.setStyleSheet('''
         QLabel {font: bold 30px; color: white}
         ''')
@@ -58,17 +59,44 @@ class ScreenTask21(QMainWindow):
         self.label_info_6.setAlignment(Qt.AlignCenter)
         
         self.input_answer = QComboBox()
-        self.input_answer.addItems(["1 Sehr Einfach", "2 Einfach", "3 Eher Einfach" ,"4 Neutral", "5 Eher Schwer", "6 Schwer", "7 Sehr Schwer"])
+        self.input_answer.addItems(["1 Sehr Schlecht", "2 Schlecht", "3 Eher Schlecht" ,"4 Neutral", "5 Eher Gefallen", "6 Gefallen", "7 Sehr Gefallen"])
         self.input_answer.setStyleSheet('''
         QComboBox {color: #1c1c1c; margin: 0 0 0 0}
         ''')
         
+        self.input_answer2 = QComboBox()
+        self.input_answer2.addItems(["1 Sehr Entspannt", "2 Entspannt", "3 Eher Entspannt" ,"4 Neutral", "5 Eher Erregt", "6 Erregt", "7 Sehr Erregt"])
+        self.input_answer2.setStyleSheet('''
+        QComboBox {color: #1c1c1c; margin: 0 0 0 0}
+        ''')
         
-        self.label_info_7 = QLabel("Wie Schwer war es?")
+        self.label_info_7 = QLabel("Wie war dein Empfinden ?")
         self.label_info_7.setStyleSheet('''
         QLabel {font: bold 30px; color: white}
         ''')
-        self.label_info_7.setAlignment(Qt.AlignCenter)        
+        self.label_info_7.setAlignment(Qt.AlignCenter)
+        
+        self.label_info_8 = QLabel("Das Bild hat mir gefallen ")
+        self.label_info_8.setStyleSheet('''
+        QLabel {font: bold 30px; color: white}
+        ''')
+        self.label_info_8.setAlignment(Qt.AlignCenter)
+        
+        self.label_info_9 = QLabel("Das Bild hat mich erregt")
+        self.label_info_9.setStyleSheet('''
+        QLabel {font: bold 30px; color: white}
+        ''')
+        self.label_info_9.setAlignment(Qt.AlignCenter)
+        
+        pics = ["A041.bmp", "A100.bmp", "H122.bmp"]
+        r = random.randint(0, len(pics) - 1)
+        used_pic = pics[r]
+        print(used_pic)
+        print("r",r)
+        self.label_pic = QLabel()
+        pixmap = QPixmap('pic/used/' +  used_pic)
+        self.label_pic.setPixmap(pixmap)
+        self.label_pic.setAlignment(Qt.AlignCenter)
         
         self.count()
         
@@ -82,7 +110,7 @@ class ScreenTask21(QMainWindow):
         
         # Layout
         self.grid = QGridLayout()
-        self.check = QHBoxLayout()
+        self.fo = QFormLayout()
         
         # Central box where the content is stored
         self.grid.addWidget(self.label_info_1,0,1,1,3)
@@ -90,11 +118,13 @@ class ScreenTask21(QMainWindow):
         self.grid.addWidget(self.label_info_3,2,1,1,3)
         self.grid.addWidget(self.label_info_4,3,1,1,3)
         
-        self.check.addWidget(self.input_answer)
+        self.fo.addRow(self.label_info_8, self.input_answer)
+        self.fo.addRow(self.label_info_9, self.input_answer2)
+        
         
         # Likert-Skala
         self.likert = QWidget()
-        self.likert.setLayout(self.check)
+        self.likert.setLayout(self.fo)
         self.likert.setStyleSheet('''
         QWidget {background-color: #1c1c1c}
         ''')
@@ -161,21 +191,21 @@ class ScreenTask21(QMainWindow):
         if self.i < 20:
             # count down for preparation time
             self.label_info_4.setText(str(20 - self.i))
-        if self.i == 20:
+        if self.i == 5:
             # Remove all Widgets currently displayed. Task starts
             self.label_info_1.setParent(None)
             self.label_info_2.setParent(None)
             self.label_info_3.setParent(None)
             self.label_info_4.setParent(None)
-            self.grid.addWidget(self.label_info_5, 4,1,1,3)
+            self.grid.addWidget(self.label_pic, 4,1,1,3)
             print(self.i)
-        if self.i == 50:
+        if self.i == 7:
             self.grid.addWidget(self.label_info_6, 0,1,1,1,Qt.AlignCenter)
             self.grid.addWidget(self.label_info_7, 1,1,1,1,Qt.AlignCenter)
             self.grid.addWidget(self.likert, 2,1,1,1, Qt.AlignCenter)
             self.grid.addWidget(self.next_button, 3,1,1,1,Qt.AlignCenter)
             self.grid.addWidget(QLabel(), 4,1,1,1,Qt.AlignCenter)
-            self.label_info_5.setParent(None)
+            self.label_pic.setParent(None)
             print("saving to " + "results/" + self.identifier + str(self.nr))
             # saving files to results folder.
             #last digit specify which sensor type it is 1 = GSR 0 = HR
@@ -196,10 +226,12 @@ class ScreenTask21(QMainWindow):
         
 def main():
     app = QApplication(sys.argv)
-    info = ScreenTask21("Max Mustermann", "1234", [])
+    info = ScreenTask32("Max Mustermann", "1234", [])
     sys.exit(app.exec_())
 
 if __name__ == "__main__":
     main()
+
+
 
 

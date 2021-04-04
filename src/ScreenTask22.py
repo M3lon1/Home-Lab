@@ -161,7 +161,7 @@ class ScreenTask22(QMainWindow):
         if self.i < 20:
             # count down for preparation time
             self.label_info_4.setText(str(20 - self.i))
-        if self.i == 5:
+        if self.i == 20:
             # Remove all Widgets currently displayed. Task starts
             self.label_info_1.setParent(None)
             self.label_info_2.setParent(None)
@@ -169,7 +169,7 @@ class ScreenTask22(QMainWindow):
             self.label_info_4.setParent(None)
             self.grid.addWidget(self.label_info_5, 4,1,1,3)
             print(self.i)
-        if self.i == 7:
+        if self.i == 50:
             self.grid.addWidget(self.label_info_6, 0,1,1,1,Qt.AlignCenter)
             self.grid.addWidget(self.label_info_7, 1,1,1,1,Qt.AlignCenter)
             self.grid.addWidget(self.likert, 2,1,1,1, Qt.AlignCenter)
