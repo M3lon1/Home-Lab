@@ -6,18 +6,6 @@ from grove.grove_gsr_sensor import GroveGSRSensor
 from PyQt5.QtGui import *
 import csv
 import random
-if "ScreenTask11" not in sys.modules:
-    from ScreenTask11 import *
-if "ScreenTask12" not in sys.modules:
-    from ScreenTask12 import *    
-if "ScreenTask21" not in sys.modules:
-    from ScreenTask21 import *
-if "ScreenTask22" not in sys.modules:
-    from ScreenTask22 import *
-if "ScreenTask31" not in sys.modules:
-    from ScreenTask31 import *
-if "ScreenTask32" not in sys.modules:
-    from ScreenTask32 import *
 
 
 class ScreenTask21(QMainWindow):
@@ -81,7 +69,13 @@ class ScreenTask21(QMainWindow):
         self.label_info_7.setStyleSheet('''
         QLabel {font: bold 30px; color: white}
         ''')
-        self.label_info_7.setAlignment(Qt.AlignCenter)        
+        self.label_info_7.setAlignment(Qt.AlignCenter)
+        
+        self.label_info_8 = QLabel("Pause")
+        self.label_info_8.setStyleSheet('''
+        QLabel {font: bold 50px; color: white}
+        ''')
+        self.label_info_8.setAlignment(Qt.AlignCenter)
         
         self.count()
         
@@ -193,6 +187,10 @@ class ScreenTask21(QMainWindow):
             self.label_info_4.setParent(None)
             self.grid.addWidget(self.label_info_5, 4,1,1,3)
         if self.i == 5:
+            self.label_info_5.setParent(None)
+            self.grid.addWidget(self.label_info_8)
+        if self.i == 8:
+            self.label_info_8.setParent(None)
             self.grid.addWidget(self.label_info_6, 0,1,1,1,Qt.AlignCenter)
             self.grid.addWidget(self.label_info_7, 1,1,1,1,Qt.AlignCenter)
             self.grid.addWidget(self.likert, 2,1,1,1, Qt.AlignCenter)

@@ -70,6 +70,12 @@ class ScreenTask12(QMainWindow):
         QLineEdit {background-color: white; margin: 0 500 0 500}
         ''')
         
+        self.label_info_8 = QLabel("Pause")
+        self.label_info_8.setStyleSheet('''
+        QLabel {font: bold 50px; color: white}
+        ''')
+        self.label_info_8.setAlignment(Qt.AlignCenter)
+        
         self.count()
         
         # Next button
@@ -171,6 +177,10 @@ class ScreenTask12(QMainWindow):
             self.label_info_5.setParent(None)
             self.grid.addWidget(self.label_info_6, 4,1,1,3)
         if self.i == 5:
+            self.label_info_6.setParent(None)
+            self.grid.addWidget(self.label_info_8)
+        if self.i == 8:
+            self.label_info_8.setParent(None)
             self.grid.addWidget(self.label_info_7, 0,1,1,1, Qt.AlignCenter)
             self.grid.addWidget(self.input_answer, 1,1,1,1, Qt.AlignCenter)
             self.grid.addWidget(QWidget(), 2,1,1,1, Qt.AlignCenter)

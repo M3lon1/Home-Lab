@@ -72,7 +72,13 @@ class ScreenTask22(QMainWindow):
         self.label_info_7.setStyleSheet('''
         QLabel {font: bold 30px; color: white}
         ''')
-        self.label_info_7.setAlignment(Qt.AlignCenter)        
+        self.label_info_7.setAlignment(Qt.AlignCenter)
+        
+        self.label_info_8 = QLabel("Pause")
+        self.label_info_8.setStyleSheet('''
+        QLabel {font: bold 50px; color: white}
+        ''')
+        self.label_info_8.setAlignment(Qt.AlignCenter)
         
         self.count()
         
@@ -184,6 +190,10 @@ class ScreenTask22(QMainWindow):
             self.label_info_4.setParent(None)
             self.grid.addWidget(self.label_info_5, 4,1,1,3)
         if self.i == 5:
+            self.label_info_5.setParent(None)
+            self.grid.addWidget(self.label_info_8)
+        if self.i == 8:
+            self.label_info_8.setParent(None)
             self.grid.addWidget(self.label_info_6, 0,1,1,1,Qt.AlignCenter)
             self.grid.addWidget(self.label_info_7, 1,1,1,1,Qt.AlignCenter)
             self.grid.addWidget(self.likert, 2,1,1,1, Qt.AlignCenter)

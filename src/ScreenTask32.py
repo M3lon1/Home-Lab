@@ -89,6 +89,12 @@ class ScreenTask32(QMainWindow):
         ''')
         self.label_info_9.setAlignment(Qt.AlignCenter)
         
+        self.label_info_10 = QLabel("Pause")
+        self.label_info_10.setStyleSheet('''
+        QLabel {font: bold 50px; color: white}
+        ''')
+        self.label_info_10.setAlignment(Qt.AlignCenter)
+        
         pics = ["A041.bmp", "A100.bmp", "H122.bmp"]
         r = random.randint(0, len(pics) - 1)
         used_pic = pics[r]
@@ -208,7 +214,11 @@ class ScreenTask32(QMainWindow):
             self.label_info_3.setParent(None)
             self.label_info_4.setParent(None)
             self.grid.addWidget(self.label_pic, 4,1,1,3)
-        if self.i == 5 :
+        if self.i == 5:
+            self.label_pic.setParent(None)
+            self.grid.addWidget(self.label_info_10)
+        if self.i == 8:
+            self.label_info_10.setParent(None)
             self.grid.addWidget(self.label_info_6, 0,1,1,1,Qt.AlignCenter)
             self.grid.addWidget(self.label_info_7, 1,1,1,1,Qt.AlignCenter)
             self.grid.addWidget(self.likert, 2,1,1,1, Qt.AlignCenter)
