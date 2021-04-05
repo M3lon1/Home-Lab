@@ -27,9 +27,17 @@ class ScreenSensorsHR(QMainWindow):
         
         
         label_hr_pic = QLabel()
-        pixmap = QPixmap('pic/psymex.png')
+        pixmap = QPixmap('pic/Instructions/DSC03717.JPG')
         label_hr_pic.setPixmap(pixmap)
         label_hr_pic.setAlignment(Qt.AlignCenter)
+        label_hr_pic.setScaledContents(1)
+        
+        container = QWidget()
+        container.setMaximumSize(587,470)
+        container.setMinimumSize(0,0)
+        
+        container_layout = QHBoxLayout(container)
+        container_layout.addWidget(label_hr_pic)
         
         # Next button
         next_button = QPushButton("Weiter")
@@ -86,7 +94,7 @@ class ScreenSensorsHR(QMainWindow):
         
         # Central box where the content is stored
         grid.addWidget(label_info_1,0,1,1,3)
-        grid.addWidget(label_hr_pic,1,1,1,1)
+        grid.addWidget(container,1,1,1,1)
         grid.addWidget(self.plot_hr,1,2,1,1)
         grid.addWidget(con, 3,2,1,1)
         grid.addWidget(next_button,6,2,5,1)
