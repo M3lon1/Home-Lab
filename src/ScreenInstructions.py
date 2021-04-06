@@ -25,31 +25,31 @@ class ScreenInstructions(QMainWindow):
         
         label_info_2 = QLabel("Es gibt insgesammt 3 Aufgaben in 2 Schwierigkeitsstufen")
         label_info_2.setStyleSheet('''
-        QLabel {font: 30px; color: white}
+        QLabel {font: bold 30px; color: white}
         ''')
         label_info_2.setAlignment(Qt.AlignCenter)
         
         label_info_3 = QLabel("Die Aufgaben stammen jeweils aus einer Kategorie (Motorisch, Affektiv, Kognitiv)")
         label_info_3.setStyleSheet('''
-        QLabel {font: 30px; color: white}
+        QLabel {font: bold 30px; color: white}
         ''')
         label_info_3.setAlignment(Qt.AlignCenter)
         
         label_info_4 = QLabel("Vor jeder Aufgabe gibt es Zeit zum einlesen")
         label_info_4.setStyleSheet('''
-        QLabel {font: 30px; color: white}
+        QLabel {font: bold 30px; color: white}
         ''')
         label_info_4.setAlignment(Qt.AlignCenter)
         
         label_info_5 = QLabel("Danach wird die Aufgabe für 30 Sekunden ausgeführt, gefolgt von einer 30 Sekunden Ruhephase")
         label_info_5.setStyleSheet('''
-        QLabel {font: 30px; color: white}
+        QLabel {font: bold 30px; color: white}
         ''')
         label_info_5.setAlignment(Qt.AlignCenter)
         
         label_info_6 = QLabel("Der Genaue Ablauf sieht wie Folgt aus")
         label_info_6.setStyleSheet('''
-        QLabel {font: 30px; color: white}
+        QLabel {font: bold 30px; color: white}
         ''')
         label_info_6.setAlignment(Qt.AlignCenter)
         

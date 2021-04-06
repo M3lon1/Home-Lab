@@ -1,0 +1,7 @@
+sudo apt-get install python3-pyqt5
+sudo apt-get install python3-pyqtgraph
+sudo apt-get install python3-pyqt5.qtsvg
+pip3 install smbus2
+
+
+

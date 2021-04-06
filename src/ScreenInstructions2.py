@@ -19,25 +19,25 @@ class ScreenInstructions2(QMainWindow):
         # Labels
         label_info_1 = QLabel("1. Baseline messung, 30 Sek")
         label_info_1.setStyleSheet('''
-        QLabel {font: 30px; color: white}
+        QLabel {font: bold 30px; color: white}
         ''')
         label_info_1.setAlignment(Qt.AlignCenter)
         
         label_info_2 = QLabel("2. Aufgabe 1, 30 Sek")
         label_info_2.setStyleSheet('''
-        QLabel {font: 30px; color: white}
+        QLabel {font: bold 30px; color: white}
         ''')
         label_info_2.setAlignment(Qt.AlignCenter)
         
         label_info_3 = QLabel("3. Pause, 30 Sek")
         label_info_3.setStyleSheet('''
-        QLabel {font: 30px; color: white}
+        QLabel {font: bold 30px; color: white}
         ''')
         label_info_3.setAlignment(Qt.AlignCenter)
         
         label_info_4 = QLabel("Schritt 2 und 3 werden werden wiederholt bis alle 6 Aufgaben durlaufen sind")
         label_info_4.setStyleSheet('''
-        QLabel {font: 30px; color: white}
+        QLabel {font: bold 30px; color: white}
         ''')
         label_info_4.setAlignment(Qt.AlignCenter)
         
