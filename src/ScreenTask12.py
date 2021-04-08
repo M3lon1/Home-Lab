@@ -18,7 +18,7 @@ class ScreenTask12(QMainWindow):
         self.initUI()
     
     def initUI(self):
-        self.setWindowTitle("PsyMex-2 Pilot Aufgabe 1 leicht")
+        self.setWindowTitle("PsyMex-2 Pilot Aufgabe 1 Schwer")
         self.i = 0 # counter for preparation time & execution time
         
         # Labels

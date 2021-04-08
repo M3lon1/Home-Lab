@@ -116,9 +116,6 @@ class Pulsesensor:
         self.thread.stopped = True
         self.BPM = 0
         return
-    
-    def get_heartbeat(self):
-        pass
 
     def get_SDNN(self):
         '''

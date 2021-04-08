@@ -75,7 +75,7 @@ class ScreenBaseline2(QMainWindow):
         
     def start_measurement(self):
         '''
-        
+        starting the sensors and a QTimer which calls the timer function every second
         '''
         self.gsr_sensor = GroveGSRSensor()
         self.gsr_sensor.startAsyncGSR()

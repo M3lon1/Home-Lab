@@ -1,0 +1,325 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Structure &mdash; PsyMex-2 06.06.2021 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Quickstart" href="quickstart.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> PsyMex-2
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Structure</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#sensorexample-py">SensorExample.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#psymexhub-py">PsyMexHub.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pilotstudie-py">PilotStudie.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#screensensorgsr-py">ScreenSensorGSR.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#screensensorhr-py">ScreenSensorHR.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#screeninstructions-2">ScreenInstructions(2)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#screenbaseline-py-2">ScreenBaseline.py(2)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#screentask11-12-py">ScreenTask11(12).py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#screentask21-22-py">ScreenTask21(22).py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#screentask31-32-py">ScreenTask31(32).py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#screenend-py">ScreenEnd.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#grove-adc-py">grove/adc.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#grove-grove-gsr-sensor-py">grove/grove_gsr_sensor.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#grove-i2c-py">grove/i2c.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pulse-mcp3008-py">pulse/MCP3008.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pulse-pulsesensor-py">pulse/pulsesensor.py</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PsyMex-2</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Structure</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/structure.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="structure">
+<h1>Structure<a class="headerlink" href="#structure" title="Permalink to this headline">¶</a></h1>
+<p>The project is made up of the following python files</p>
+<ul class="simple">
+<li><p>SensorExample.py</p></li>
+<li><p>PsyMexHub.py</p></li>
+<li><p>PilotStudie.py</p></li>
+<li><p>ScreenSensorGSR.py</p></li>
+<li><p>ScreenSensorHR.py</p></li>
+<li><p>ScreenInstructions.py</p></li>
+<li><p>ScreenInstructions2.py</p></li>
+<li><p>ScreenBaseline.py</p></li>
+<li><p>ScreenBaseline2.py</p></li>
+<li><p>ScreenTask11.py</p></li>
+<li><p>ScreenTask12.py</p></li>
+<li><p>ScreenTask21.py</p></li>
+<li><p>ScreenTask22.py</p></li>
+<li><p>ScreenTask31.py</p></li>
+<li><p>ScreenTask32.py</p></li>
+<li><p>ScreenEnd.py</p></li>
+<li><p>grove/adc.py</p></li>
+<li><p>grove/grove_gsr_sensor.py</p></li>
+<li><p>grove/i2c.py</p></li>
+<li><p>pulse/MCP3008.py</p></li>
+<li><p>pulse/pulsesensor.py</p></li>
+</ul>
+<div class="section" id="sensorexample-py">
+<h2>SensorExample.py<a class="headerlink" href="#sensorexample-py" title="Permalink to this headline">¶</a></h2>
+<p>This file contains a simple example on how to start/stop and retrieve data from the sensors.
+This can be used in any python script. It is also possible to use the sensors with a QTimer from PyQt5.
+An example can be found in the ScreenBaseline2.py file. Look at the start_measurement and timer function in the file.</p>
+</div>
+<div class="section" id="psymexhub-py">
+<h2>PsyMexHub.py<a class="headerlink" href="#psymexhub-py" title="Permalink to this headline">¶</a></h2>
+<p>This file builds the hub window built with PyQt5. The layout is build with several nested QVBoxLayout/QHBoxLayout.
+To show the different views in the hub, the layouts are altered, no new windows are drawn.</p>
+</div>
+<div class="section" id="pilotstudie-py">
+<h2>PilotStudie.py<a class="headerlink" href="#pilotstudie-py" title="Permalink to this headline">¶</a></h2>
+<p>This file is the entry point for the pilot studie. It shows the first screen of it where you can enter participants data.</p>
+</div>
+<div class="section" id="screensensorgsr-py">
+<h2>ScreenSensorGSR.py<a class="headerlink" href="#screensensorgsr-py" title="Permalink to this headline">¶</a></h2>
+<p>This file shows the screen for setting up the GSR sensor and testing it with a live plot.</p>
+</div>
+<div class="section" id="screensensorhr-py">
+<h2>ScreenSensorHR.py<a class="headerlink" href="#screensensorhr-py" title="Permalink to this headline">¶</a></h2>
+<p>This file shows the screen for setting up the heart rate sensor and testing it with a live plot.</p>
+</div>
+<div class="section" id="screeninstructions-2">
+<h2>ScreenInstructions(2)<a class="headerlink" href="#screeninstructions-2" title="Permalink to this headline">¶</a></h2>
+<p>Those files show text that explains the procedure of the studie.</p>
+</div>
+<div class="section" id="screenbaseline-py-2">
+<h2>ScreenBaseline.py(2)<a class="headerlink" href="#screenbaseline-py-2" title="Permalink to this headline">¶</a></h2>
+<p>The first file shows text that explains briefly the baseline measurement.
+The second file performs the measurement. The sensors run in the background and the result is saved in a csv file  in the results/ folder.
+The screen of the second file shows a cross to look at.</p>
+</div>
+<div class="section" id="screentask11-12-py">
+<h2>ScreenTask11(12).py<a class="headerlink" href="#screentask11-12-py" title="Permalink to this headline">¶</a></h2>
+<p>Those files show the cognitive task. The last digit shows the difficulty of the task, where 1 is easy 2 is hard.
+This holds for all the ScreenTask files. In this task you eighter have to sum up the number 3 or subtract 17 starting from 7561.</p>
+</div>
+<div class="section" id="screentask21-22-py">
+<h2>ScreenTask21(22).py<a class="headerlink" href="#screentask21-22-py" title="Permalink to this headline">¶</a></h2>
+<p>Those files show the motion task. In this task you eighter have to open and close your hand repeatedly with or without resistance.</p>
+</div>
+<div class="section" id="screentask31-32-py">
+<h2>ScreenTask31(32).py<a class="headerlink" href="#screentask31-32-py" title="Permalink to this headline">¶</a></h2>
+<p>Those files show the affective task. In this task you eighter have to look at a neutral or negative picture.</p>
+</div>
+<div class="section" id="screenend-py">
+<h2>ScreenEnd.py<a class="headerlink" href="#screenend-py" title="Permalink to this headline">¶</a></h2>
+<p>This file marks the end of the study. It shows a thank you screen.</p>
+</div>
+<div class="section" id="grove-adc-py">
+<h2>grove/adc.py<a class="headerlink" href="#grove-adc-py" title="Permalink to this headline">¶</a></h2>
+<p>This file controlls the I2C ADC attatched to the grove gsr sensor.
+The code was taken from <a class="reference external" href="https://wiki.seeedstudio.com/Grove-GSR_Sensor/">the seeedstudio homepage</a></p>
+</div>
+<div class="section" id="grove-grove-gsr-sensor-py">
+<h2>grove/grove_gsr_sensor.py<a class="headerlink" href="#grove-grove-gsr-sensor-py" title="Permalink to this headline">¶</a></h2>
+<p>This file controlls the gsr sensor. It was taken from <a class="reference external" href="https://wiki.seeedstudio.com/Grove-GSR_Sensor/">the seeedstudio homepage</a>.
+The file was modified to hold a list of values with their timestamps and starting/stopping the sensor in a separate thread.</p>
+</div>
+<div class="section" id="grove-i2c-py">
+<h2>grove/i2c.py<a class="headerlink" href="#grove-i2c-py" title="Permalink to this headline">¶</a></h2>
+<p>This file is used to connect the grove sensor to the pi
+it was taken from <a class="reference external" href="https://wiki.seeedstudio.com/Grove-GSR_Sensor/">the seeedstudio homepage</a></p>
+</div>
+<div class="section" id="pulse-mcp3008-py">
+<h2>pulse/MCP3008.py<a class="headerlink" href="#pulse-mcp3008-py" title="Permalink to this headline">¶</a></h2>
+<p>This file controlls the adc used for the pulse sensor. The code was taken from <a class="reference external" href="https://tutorials-raspberrypi.de/raspberry-pi-puls-herzfrequenz-messen/">this tutorial</a></p>
+</div>
+<div class="section" id="pulse-pulsesensor-py">
+<h2>pulse/pulsesensor.py<a class="headerlink" href="#pulse-pulsesensor-py" title="Permalink to this headline">¶</a></h2>
+<p>This file controlls the pulse sensor. The code was taken from <a class="reference external" href="https://tutorials-raspberrypi.de/raspberry-pi-puls-herzfrequenz-messen/">this tutorial</a>.
+The code was extended to hold the values and timestamp in a list. Functions to compute the RMSSD and SDNN are added.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="quickstart.html" class="btn btn-neutral float-left" title="Quickstart" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Sebastian Heckner.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

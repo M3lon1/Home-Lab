@@ -201,23 +201,23 @@ class MainWindow(QWidget):
         self.setLayout(self.layout_out)
         #-----------------------------------------------------------
         # Live Plot
-        self.pen = pg.mkPen(color=(255,255,255), width=2)
-        self.plot_hr = pg.PlotWidget(title='Heart Rate')
-        self.plot_hr.setAccessibleName('plot_hr')
-        self.plot_hr.setBackground('#212121')
-        self.plot_hr.setLabel('left', 'BPM')
-        self.plot_hr.setLabel('bottom', 'Time (s)')
-        self.plot_hr.setYRange(-10, 200)
-        self.hr_line_ref = self.plot_hr.plot(pen=self.pen, symbol='o')
+        self.pen = pg.mkPen(color=(255,255,255), width=2) # Style of the plot
+        self.plot_hr = pg.PlotWidget(title='Heart Rate') # Title
+        self.plot_hr.setAccessibleName('plot_hr') # Name property of plot_hr
+        self.plot_hr.setBackground('#212121') # Background color
+        self.plot_hr.setLabel('left', 'BPM') # y axis label
+        self.plot_hr.setLabel('bottom', 'Time (s)') # x axis label
+        self.plot_hr.setYRange(-10, 200) # y axis max range
+        self.hr_line_ref = self.plot_hr.plot(pen=self.pen, symbol='o') # Symbol to use for data point
         self.layout_right_top_right.addWidget(self.plot_hr)
         
-        self.plot_gsr = pg.PlotWidget(title='Skin Conductance')
-        self.plot_gsr.setAccessibleName('plot_gsr')
-        self.plot_gsr.setBackground('#212121')
-        self.plot_gsr.setLabel('left', 'Micro  Siemens')
-        self.plot_gsr.setLabel('bottom', 'Time (s)')
-        self.plot_gsr.setYRange(-10,30)
-        self.gsr_line_ref = self.plot_gsr.plot(pen=self.pen, symbol='o')
+        self.plot_gsr = pg.PlotWidget(title='Skin Conductance') # Title
+        self.plot_gsr.setAccessibleName('plot_gsr') # # Name property of plot_hr
+        self.plot_gsr.setBackground('#212121') # Background color
+        self.plot_gsr.setLabel('left', 'Micro  Siemens') # y axis label
+        self.plot_gsr.setLabel('bottom', 'Time (s)') # x axis label
+        self.plot_gsr.setYRange(-10,30) # y axis max range
+        self.gsr_line_ref = self.plot_gsr.plot(pen=self.pen, symbol='o') # Symbol to use for data point
         self.layout_right_bottom_right.addWidget(self.plot_gsr)
         #-----------------------------------------------------------
         
@@ -225,7 +225,8 @@ class MainWindow(QWidget):
     
     def hr_plot(self):
         '''
-        QTimer gets called every interval
+        This function initializes the heart rate sensors.
+        Starts a QTimer which calls the update_hr_plot function every half second
         '''
         self.check_hr_plot = True
         self.hr_x = [0]
@@ -238,16 +239,27 @@ class MainWindow(QWidget):
         return
     
     def hr_plot_stop(self):
+        '''
+        This function stops the heart rate plot
+        '''
         self.hr_timer.stop()
         self.pulse_sensor.stopAsyncBPM()
         return
     
     def hr_plot_clear(self):
+        '''
+        This function clears the hear rate view 
+        '''
         plt = self.plot_hr.getPlotItem()
         plt.clear()
         self.hr_line_ref = self.plot_hr.plot(pen=self.pen, symbol='o')
 
     def update_hr_plot(self):
+        '''
+        This function updates the heart rate plot.
+        It checks if there is data in the pulse_sensor.BPM_list and if it is different from the last data point.
+        If it is append it to the plot.
+        '''
         if len(self.pulse_sensor.BPM_list) > 1:
             if self.hr_y[-1] != self.pulse_sensor.BPM_list[-1][0]:
                 self.hr_x.append(int(self.pulse_sensor.BPM_list[-1][1]))
@@ -258,6 +270,10 @@ class MainWindow(QWidget):
             print(sys.exc_info())
             
     def gsr_plot(self):
+        '''
+        This function initializes the gsr rate sensors.
+        Starts a QTimer which calls the update_gsr_plot function every half second
+        '''
         self.check_gsr_plot = True
         self.gsr_x = [0]
         self.gsr_y = [0]
@@ -269,17 +285,28 @@ class MainWindow(QWidget):
         return
     
     def gsr_plot_stop(self):
+        '''
+        This function stops the gsr plot
+        '''
         self.gsr_timer.stop()
         self.gsr_sensor.stopAsyncGSR()
         return
     
     def gsr_plot_clear(self):
+        '''
+        This function clears the gsr plot 
+        '''
         plt = self.plot_gsr.getPlotItem()
         plt.clear()
         self.gsr_line_ref = self.plot_gsr.plot(pen=self.pen, symbol='o')
         return
     
     def update_gsr_plot(self):
+        '''
+        This function updates the gsr plot.
+        It checks if there is data in the gsr_sensor.GSR_list and if it is different from the last data point.
+        If it is append it to the plot.       
+        '''
         if len(self.gsr_sensor.GSR_list) > 1:
             if self.gsr_y[-1] != self.gsr_sensor.GSR_list[-1][0]:
                 y = self.gsr_sensor.GSR_list[-1][0] * 10**6
@@ -293,7 +320,7 @@ class MainWindow(QWidget):
     
     def hr_button(self):
         '''
-        delete gsr section for dislaying heart rate only
+        This function deletes the gsr widgets in the layout to just display the heart rate plot
         '''
         # Check if both views still exists then delete GSR
         if (self.layout_right_top_right.itemAt(0) and self.layout_right_top_left.itemAt(0) is not None) and (self.layout_right_bottom_right.itemAt(0) and self.layout_right_bottom_left.itemAt(0) is not None):
@@ -316,7 +343,7 @@ class MainWindow(QWidget):
     
     def gsr_button(self):
         '''
-        delete gsr section for dislaying heart rate only
+        This function deletes the heart rate widgets to just display the gsr plot
         '''
         # Check if both view still exists
         if (self.layout_right_top_right.itemAt(0) and self.layout_right_top_left.itemAt(0) is not None) and (self.layout_right_bottom_right.itemAt(0) and self.layout_right_bottom_left.itemAt(0) is not None):
@@ -340,8 +367,8 @@ class MainWindow(QWidget):
         
     def dashboard_button(self):
         '''
+        This function resets the view so that the gsr and hr plot are shown together
         todo: write generic version for adding/removing widgets/layouts
-        Checks which layout is currently displayed 
         '''
         if self.layout_right_bottom_right.itemAt(0):
             if self.layout_right_bottom_right.itemAt(0).widget().accessibleName() != 'plot_gsr':
@@ -358,7 +385,9 @@ class MainWindow(QWidget):
     
     def studies_button(self):
         '''
-        shows implemented studies
+        This function deletes the heart rate and gsr widgets to just show a container whicht holds buttons for studies.
+        Currently just the pilot studie is implemented.
+        There will be shown just one button to start this studie
         '''
         # Check if both view still exists then clear all but right bottom corner
         if (self.layout_right_top_right.itemAt(0) and self.layout_right_top_left.itemAt(0) is not None) and (self.layout_right_bottom_right.itemAt(0) and self.layout_right_bottom_left.itemAt(0) is not None):
@@ -379,6 +408,9 @@ class MainWindow(QWidget):
                 self.layout_right_bottom_left.itemAt(0).widget().setParent(None)
                 
     def start_pilot_studie(self):
+        '''
+        This function starts the pilot studie
+        '''
         self.ps = PilotStudie()
         self.close()
         

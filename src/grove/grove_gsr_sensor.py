@@ -50,6 +50,7 @@ class GroveGSRSensor:
         plt.plot(x_val, y_val)
         plt.tight_layout()
         plt.show()
+        
     def save(self, path):
         with open(path, 'w', newline="") as f:
             writer = csv.writer(f)
