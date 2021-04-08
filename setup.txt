@@ -1,0 +1,2 @@
+Install seeed studio grove requred librarys for pi hat
+	https://wiki.seeedstudio.com/Grove_Base_Hat_for_Raspberry_Pi/#installation
