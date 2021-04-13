@@ -52,7 +52,7 @@ class ScreenTask12(QMainWindow):
         ''')
         self.label_info_5.setAlignment(Qt.AlignCenter)
         
-        self.label_info_6 = QLabel("Los!")
+        self.label_info_6 = QLabel("Los! 7561")
         self.label_info_6.setStyleSheet('''
         QLabel {font: bold 30px; color: white}
         ''')

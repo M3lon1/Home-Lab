@@ -19,7 +19,7 @@ class ScreenSensorsHR(QMainWindow):
         
         
         # Labels
-        label_info_1 = QLabel("Bitte Bringen nun die Sensoren an und teste sie mit dem rechten Live Diagram")
+        label_info_1 = QLabel("Bitte bringe nun die Sensoren an und teste sie mit dem rechten Live Diagram")
         label_info_1.setStyleSheet('''
         QLabel {font: bold 30px; color: white}
         ''')
