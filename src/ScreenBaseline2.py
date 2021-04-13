@@ -79,6 +79,8 @@ class ScreenBaseline2(QMainWindow):
         '''
         self.gsr_sensor = GroveGSRSensor()
         self.gsr_sensor.startAsyncGSR()
+        self.gsr_x = [0]
+        self.gsr_y = [0]
         self.pulse_sensor = Pulsesensor()
         self.pulse_sensor.startAsyncBPM()
         self.qt = QTimer()
@@ -92,13 +94,18 @@ class ScreenBaseline2(QMainWindow):
         '''
         self.i += 1
         if self.i == 30:
+            if len(self.gsr_sensor.GSR_list) > 1:
+                if self.gsr_y[-1] != self.gsr_sensor.GSR_list[-1][0]:
+                    y = self.gsr_sensor.GSR_list[-1][0] * 10**6
+                    self.gsr_y.append(y)
+                    self.gsr_x.append(self.gsr_sensor.GSR_list[-1][1])
             print("saving to " + "results/" + self.identifier + self.nr)
             with open("results/" + self.identifier + self.nr + "1", 'w', newline='') as myfile:
                 wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-                wr.writerow(self.gsr_sensor.GSR_list)
+                wr.writerows(self.gsr_sensor.GSR_list)
             with open("results/" + self.identifier + self.nr + "0", 'w', newline='') as myfile:
                 wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-                wr.writerow(self.pulse_sensor.BPM_list)
+                wr.writerows(self.pulse_sensor.BPM_list)
             self.gsr_sensor.stopAsyncGSR()
             self.pulse_sensor.stopAsyncBPM()
             self.qt.stop()

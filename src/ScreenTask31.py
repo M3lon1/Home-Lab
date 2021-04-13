@@ -154,7 +154,7 @@ class ScreenTask31(QMainWindow):
         if self.input_answer.currentText() != '':
             with open("results/" + self.identifier + self.nr + "2", 'w', newline='') as myfile:
                 wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-                wr.writerow(self.input_answer.currentText())
+                wr.writerows(self.input_answer.currentText())
             # Check if there are tasks left
             if len(self.tasks) != 0: 
                 for item in self.tasks:
@@ -232,13 +232,13 @@ class ScreenTask31(QMainWindow):
             #last digit specify which sensor type it is 1 = GSR 0 = HR
             with open("results/" + self.identifier + self.nr + "2", 'w', newline='') as myfile:
                 wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-                wr.writerow(self.input_answer.currentText())
+                wr.writerows(self.input_answer.currentText())
             with open("results/" + self.identifier + self.nr + "1", 'w', newline='') as myfile:
                 wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-                wr.writerow(self.gsr_sensor.GSR_list)
+                wr.writerows(self.gsr_sensor.GSR_list)
             with open("results/" + self.identifier + self.nr + "0", 'w', newline='') as myfile:
                 wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-                wr.writerow(self.pulse_sensor.BPM_list)
+                wr.writerows(self.pulse_sensor.BPM_list)
             # Stop the sensors
             self.gsr_sensor.stopAsyncGSR()
             self.pulse_sensor.stopAsyncBPM()               

@@ -24,18 +24,20 @@ class AnalysisPlot(QMainWindow):
         if csv_path[-1] == '1':
             self.plot.setLabel('left', 'Micro  Siemens') # y axis label
         
+        # a used to reduce gsr datapoints that are plotted
+        a = 0
         self.x = []
         self.y = []
         with open(csv_path) as csv_file:
             c = csv.reader(csv_file, delimiter=',')
             for i in c:
-                print("i: ", i)
-                print("csv file", len(i))
-
-                for j in range(len(i)):
-                    split = i[j].split(', ')
-                    self.x.append(float(split[1].replace(']', '')))
-                    self.y.append(float(split[0].replace('[', '')))
+                
+                a += 1
+                #print("split: ", split)
+                #print("to float", float(split[1].replace(']', '')))
+                if a % 500 == 0:
+                    self.x.append(float(i[1]))
+                    self.y.append(float(i[0]))
             #self.line_ref.setData(self.x, self.y)
         self.layout.addWidget(self.plot)
         self.plot.plot(self.x, self.y, pen=self.pen, symbol='o') # Symbol to use for data point
@@ -52,7 +54,9 @@ class AnalysisPlot(QMainWindow):
         
 def main():
     app = QApplication(sys.argv)
-    win = AnalysisPlot('results/1126211')
+    path = 'results/01031221'
+    path_2 = 'results/05126001'
+    win = AnalysisPlot(path_2)
 
     
     sys.exit(app.exec_())

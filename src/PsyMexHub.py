@@ -228,7 +228,6 @@ class MainWindow(QWidget):
         This function initializes the heart rate sensors.
         Starts a QTimer which calls the update_hr_plot function every half second
         '''
-        self.check_hr_plot = True
         self.hr_x = [0]
         self.hr_y = [0]
         self.pulse_sensor = Pulsesensor()
@@ -274,7 +273,6 @@ class MainWindow(QWidget):
         This function initializes the gsr rate sensors.
         Starts a QTimer which calls the update_gsr_plot function every half second
         '''
-        self.check_gsr_plot = True
         self.gsr_x = [0]
         self.gsr_y = [0]
         self.gsr_sensor = GroveGSRSensor()
