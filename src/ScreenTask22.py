@@ -127,7 +127,7 @@ class ScreenTask22(QMainWindow):
         if self.input_answer.currentText() != '':
             with open("results/" + self.identifier + self.nr + "2", 'w', newline='') as myfile:
                 wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-                wr.writerow(self.input_answer.currentText())
+                wr.writerows(self.input_answer.currentText())
             # Check if there are tasks left
             if len(self.tasks) != 0: 
                 for item in self.tasks:
@@ -182,17 +182,17 @@ class ScreenTask22(QMainWindow):
         if self.i < 20:
             # count down for preparation time
             self.label_info_4.setText(str(20 - self.i))
-        if self.i == 2:
+        if self.i == 20:
             # Remove all Widgets currently displayed. Task starts
             self.label_info_1.setParent(None)
             self.label_info_2.setParent(None)
             self.label_info_3.setParent(None)
             self.label_info_4.setParent(None)
             self.grid.addWidget(self.label_info_5, 4,1,1,3)
-        if self.i == 5:
+        if self.i == 50:
             self.label_info_5.setParent(None)
             self.grid.addWidget(self.label_info_8)
-        if self.i == 8:
+        if self.i == 80:
             self.label_info_8.setParent(None)
             self.grid.addWidget(self.label_info_6, 0,1,1,1,Qt.AlignCenter)
             self.grid.addWidget(self.label_info_7, 1,1,1,1,Qt.AlignCenter)
@@ -205,13 +205,13 @@ class ScreenTask22(QMainWindow):
             #last digit specify which sensor type it is 1 = GSR 0 = HR
             with open("results/" + self.identifier + self.nr + "2", 'w', newline='') as myfile:
                 wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-                wr.writerow(self.input_answer.currentText())
+                wr.writerows(self.input_answer.currentText())
             with open("results/" + self.identifier + self.nr + "1", 'w', newline='') as myfile:
                 wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-                wr.writerow(self.gsr_sensor.GSR_list)
+                wr.writerows(self.gsr_sensor.GSR_list)
             with open("results/" + self.identifier + self.nr + "0", 'w', newline='') as myfile:
                 wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-                wr.writerow(self.pulse_sensor.BPM_list)
+                wr.writerows(self.pulse_sensor.BPM_list)
             # Stop the sensors
             self.gsr_sensor.stopAsyncGSR()
             self.pulse_sensor.stopAsyncBPM()               

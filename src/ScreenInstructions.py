@@ -23,7 +23,7 @@ class ScreenInstructions(QMainWindow):
         ''')
         label_info_1.setAlignment(Qt.AlignCenter)
         
-        label_info_2 = QLabel("Es gibt insgesammt 3 Aufgaben in 2 Schwierigkeitsstufen")
+        label_info_2 = QLabel("Es gibt insgesamt 3 Aufgaben in 2 Schwierigkeitsstufen")
         label_info_2.setStyleSheet('''
         QLabel {font: bold 30px; color: white}
         ''')
@@ -35,7 +35,7 @@ class ScreenInstructions(QMainWindow):
         ''')
         label_info_3.setAlignment(Qt.AlignCenter)
         
-        label_info_4 = QLabel("Vor jeder Aufgabe gibt es Zeit zum einlesen")
+        label_info_4 = QLabel("Vor jeder Aufgabe gibt es Zeit zum Einlesen")
         label_info_4.setStyleSheet('''
         QLabel {font: bold 30px; color: white}
         ''')
@@ -47,7 +47,7 @@ class ScreenInstructions(QMainWindow):
         ''')
         label_info_5.setAlignment(Qt.AlignCenter)
         
-        label_info_6 = QLabel("Der Genaue Ablauf sieht wie Folgt aus")
+        label_info_6 = QLabel("Der genaue Ablauf sieht wie folgt aus")
         label_info_6.setStyleSheet('''
         QLabel {font: bold 30px; color: white}
         ''')

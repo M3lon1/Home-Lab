@@ -17,7 +17,7 @@ class ScreenBaseline(QMainWindow):
         
         
         # Labels
-        label_info_1 = QLabel("Zur feststellung deiner ruhe Werte führen wir nun eine 30 Sekunden lange Messung durch ")
+        label_info_1 = QLabel("Zur Feststellung deiner Ruhewerte führen wir nun eine 30 Sekunden lange Messung durch ")
         label_info_1.setStyleSheet('''
         QLabel {font: bold 30px; color: white}
         ''')
