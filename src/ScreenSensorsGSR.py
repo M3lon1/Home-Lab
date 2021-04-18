@@ -111,6 +111,7 @@ class ScreenSensorsGSR(QMainWindow):
         self.showMaximized()
     
     def next_page(self):
+        #self.gsr_sensor.GSR_list = []
         self.next_page = ScreenSensorsHR(self.name, self.identifier)
         self.close()
         
