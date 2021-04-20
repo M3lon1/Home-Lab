@@ -19,6 +19,7 @@ class ScreenBaseline2(QMainWindow):
         self.name = name
         self.identifier = identifier
         self.initUI()
+        print(self.gsr_sensor.GSR_list)
         self.tasks = ["ScreenTask11", "ScreenTask12", "ScreenTask21", "ScreenTask22", "ScreenTask31", "ScreenTask32"]
         self.nr = "00"
     
@@ -93,19 +94,24 @@ class ScreenBaseline2(QMainWindow):
         Wait for 30 seconds then save the sensor list to csv file
         '''
         self.i += 1
+        if len(self.gsr_sensor.GSR_list) > 1:
+            if self.gsr_y[-1] != self.gsr_sensor.GSR_list[-1][0]:
+                y = self.gsr_sensor.GSR_list[-1][0] * 10**6
+                self.gsr_y.append(y)
+                self.gsr_x.append(self.gsr_sensor.GSR_list[-1][1])
         if self.i == 30:
-            if len(self.gsr_sensor.GSR_list) > 1:
-                if self.gsr_y[-1] != self.gsr_sensor.GSR_list[-1][0]:
-                    y = self.gsr_sensor.GSR_list[-1][0] * 10**6
-                    self.gsr_y.append(y)
-                    self.gsr_x.append(self.gsr_sensor.GSR_list[-1][1])
             print("saving to " + "results/" + self.identifier + self.nr)
             with open("results/" + self.identifier + self.nr + "1", 'w', newline='') as myfile:
+                tmp = []
+                for i in range(len(self.gsr_y)):
+                    tmp.append([self.gsr_y[i], self.gsr_x[i]])
                 wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-                wr.writerows(self.gsr_sensor.GSR_list)
+                #wr.writerows(self.gsr_sensor.GSR_list)
+                wr.writerows(tmp)
             with open("results/" + self.identifier + self.nr + "0", 'w', newline='') as myfile:
                 wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-                wr.writerows(self.pulse_sensor.BPM_list)
+                #wr.writerows(self.pulse_sensor.BPM_list)
+                wr.writerows(self.gsr_sensor.GSR_list)
             self.gsr_sensor.stopAsyncGSR()
             self.pulse_sensor.stopAsyncBPM()
             self.qt.stop()

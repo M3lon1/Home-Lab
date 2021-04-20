@@ -22,6 +22,7 @@ class GroveGSRSensor:
             signal = self.adc.read(self.channel)
             try:
                 value = 1/(((1024 + 2 * signal) * 10000) / (512 - signal))
+                print("signal: ", signal, " " , "value: ", value)
             except ZeroDivisionError as e:
                 pass
             self.GSR = value
