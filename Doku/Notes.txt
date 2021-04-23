@@ -1,9 +1,0 @@
-Hardware:
-    MCP3008 ADC     https://tutorials-raspberrypi.de/raspberry-pi-mcp3008-analoge-signale-auslesen/
-    Pulse Sensor    https://pulsesensor.com/
-    Raspberry pi    https://tutorials-raspberrypi.de/raspberry-pi-puls-herzfrequenz-messen/
-                    https://www.youtube.com/watch?v=s027fBoh96k
-                    https://github.com/tutRPi/Raspberry-Pi-Heartbeat-Pulse-Sensor
-Probleme:
-	Die berechnung der Herzwert parameter werden durch störungen beeinflusst z.b wenn der sensor keine messung erhält wird das rr intervall viel zu groß. "lösung" normwerte betrachten und höhere oder tiefere werte ausschliessen.
-	Herschlag wird z.b zu früh oder spät detektiert, was zur erhöhung des RMSSD führen kann. 
