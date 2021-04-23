@@ -1,17 +1,3 @@
-Unbearbeiteter Daten-Export (tab separat)
-
-
-Klient:	Sebastian,Heckner
-Sitzung:	23.04.sep.sebi 
-Datum:	2021-04-23
-Zeit:	13:23:17
-Dauer:	81	Sekunden.
-Abtastrate:	32	Samples/sek.
-
-Beispiele	32 SPS	
-Zeit	Sensor-C:EDA (Hautleitwert)	
-
-
 0	8.829
 1	4.781
 2	4.788
@@ -2604,5 +2590,3 @@ Zeit	Sensor-C:EDA (Hautleitwert)
 2589	232.558
 2590	232.558
 2591	232.558
-
-<Unbearbeitete Daten exportiert>
