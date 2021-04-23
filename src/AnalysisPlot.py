@@ -119,11 +119,13 @@ class AnalysisPlot(QMainWindow):
         var_sum = 0 # sum to calculate variance
         data_length = 0 # length of the data set, used for calculate the mean
         val_sum_y = 0 # sum of all y values, used to calculate the mean
+        
         with open(self.csv_psymex) as csv_file:
             c = csv.reader(csv_file, delimiter=',')
             for i in c:
                 # starting at 3 seconds, every datapoint before is ignored
-                if round(float(i[1]), 1) > 2:
+                if round(float(i[1]), 1) > 20:
+                    
                     data_length += 1
                     val_sum_y += float(i[0]) * (10 ** 6)
                     x.append(float(i[1]))
@@ -160,6 +162,7 @@ class AnalysisPlot(QMainWindow):
         for value in y:
             y[count] = (value - mean) / std_dev
             count += 1
+        
         self.plot_psymex.plot(x, y, pen=self.pen) # Symbol to use for data point
         
         self.label_mean_psymex.setText("Durchschnitt PsyMex: " + str(mean))
@@ -289,7 +292,7 @@ class AnalysisPlot(QMainWindow):
 
         correlation =  s_1 / math.sqrt(( s_2 * s_3))
         self.label_correlation.setText("Korrelation: " + str(correlation))
-        self.plot_nexus.plot(low_y, Y, pen = self.pen, symbol='o')
+        #self.plot_nexus.plot(low_y, Y, pen = self.pen, symbol='o')
         #self.plot_nexus.plot(Y, low_x, pen = self.pen, symbol='o')
         return
         
@@ -304,10 +307,13 @@ class AnalysisPlot(QMainWindow):
                 if float(i[1]) > 1:
                     break
         return
+    
 def main():
     app = QApplication(sys.argv)
-    win = AnalysisPlot('results/Rebecca/04224001', "results/Rebecca/result_nexus_csv_adjusted")
+    path_nexus = "results/PilotStudie/Proband_6/23.04/two_hands/nexus"
+    path_psymex = "results/PilotStudie/Proband_6/23.04/two_hands/psymex"
+    win = AnalysisPlot(path_psymex, path_nexus)
     sys.exit(app.exec_())
-    
+
 if __name__ == "__main__":
     main()

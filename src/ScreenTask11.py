@@ -185,10 +185,10 @@ class ScreenTask11(QMainWindow):
             print("saving to " + "results/" + self.identifier + str(self.nr))
             # saving files to results folder.
             #last digit specify which sensor type it is 1 = GSR 0 = HR or Answer
-            with open("results/" + self.identifier + self.nr + "1", 'w', newline='') as myfile:
+            with open("results/Norina/" + self.identifier + self.nr + "1", 'w', newline='') as myfile:
                 wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
                 wr.writerows(self.gsr_sensor.GSR_list)
-            with open("results/" + self.identifier + self.nr + "0", 'w', newline='') as myfile:
+            with open("results/Norina/" + self.identifier + self.nr + "0", 'w', newline='') as myfile:
                 wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
                 wr.writerows(self.pulse_sensor.BPM_list)
             # Stop the sensors
@@ -199,7 +199,7 @@ class ScreenTask11(QMainWindow):
         
 def main():
     app = QApplication(sys.argv)
-    info = ScreenTask11("Max Mustermann", "1234", [])
+    info = ScreenTask11("Max Mustermann", "22.04.to.", [])
     sys.exit(app.exec_())
 
 if __name__ == "__main__":
