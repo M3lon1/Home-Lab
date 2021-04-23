@@ -1,17 +1,3 @@
-Unbearbeiteter Daten-Export (tab separat)
-
-
-Klient:	Cornelius,Hottenrot
-Sitzung:	23.04.sep 
-Datum:	2021-04-23
-Zeit:	15:08:36
-Dauer:	86	Sekunden.
-Abtastrate:	32	Samples/sek.
-
-Beispiele	32 SPS	
-Zeit	Sensor-C:EDA (Hautleitwert)	
-
-
 0	232.558
 1	232.558
 2	232.558
@@ -2764,5 +2750,3 @@ Zeit	Sensor-C:EDA (Hautleitwert)
 2749	1.113
 2750	1.113
 2751	1.113
-
-<Unbearbeitete Daten exportiert>

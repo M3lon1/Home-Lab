@@ -95,8 +95,11 @@ class AnalysisPlot(QMainWindow):
         self.layout.addWidget(self.plot_prop)
         
         self.count()
-        self.plot_psymex_data()
-        self.plot_nexus_data()
+        start_psymex = 1
+        start_nexus = 1
+        end_nexus = 80
+        self.plot_psymex_data(start_psymex)
+        self.plot_nexus_data(start_nexus, end_nexus)
         self.calc_correlation()
         
         widget = QWidget()
@@ -107,7 +110,7 @@ class AnalysisPlot(QMainWindow):
         self.setCentralWidget(widget)
         self.showMaximized()
         
-    def plot_psymex_data(self):
+    def plot_psymex_data(self, start):
         '''
         This function plots the psymex data
         The psymex data is split up into separate files for each task
@@ -124,7 +127,7 @@ class AnalysisPlot(QMainWindow):
             c = csv.reader(csv_file, delimiter=',')
             for i in c:
                 # starting at 3 seconds, every datapoint before is ignored
-                if round(float(i[1]), 1) > 1:
+                if round(float(i[1]), 1) > start:
                     
                     data_length += 1
                     val_sum_y += float(i[0]) * (10 ** 6)
@@ -170,7 +173,7 @@ class AnalysisPlot(QMainWindow):
         self.label_stddev_psymex.setText("Standardabweichung PsyMex: " + str(math.sqrt(var)))
         return
     
-    def plot_nexus_data(self):
+    def plot_nexus_data(self, start, end):
         '''
         This function plots the nexus data
         The nexus data is one large csv file therefore we need to split depending on the time stamp
@@ -186,8 +189,8 @@ class AnalysisPlot(QMainWindow):
         var_sum = 0 # sum to calculate variance
         data_length = 0 # length of the data set, used for calculate the mean
         val_sum = 0 # sum of all y values, used to calculate the mean
-        lower_bound = 32 * 2
-        upper_bound = 32 * 80
+        lower_bound = 32 * start
+        upper_bound = 32 * end
         with open(self.csv_nexus) as csv_file:
             c = csv.reader(csv_file, delimiter=',')
             for i in c:
@@ -310,8 +313,8 @@ class AnalysisPlot(QMainWindow):
     
 def main():
     app = QApplication(sys.argv)
-    path_nexus = "results/PilotStudie/Proband_5/23.04/two_hand/nexus"
-    path_psymex = "results/PilotStudie/Proband_5/23.04/two_hand/psymex"
+    path_nexus = "results/PilotStudie/proband_5/23.04/one_hand/nexus"
+    path_psymex = "results/PilotStudie/proband_5/23.04/one_hand/psymex"
     win = AnalysisPlot(path_psymex, path_nexus)
     sys.exit(app.exec_())
 
