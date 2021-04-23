@@ -124,7 +124,7 @@ class AnalysisPlot(QMainWindow):
             c = csv.reader(csv_file, delimiter=',')
             for i in c:
                 # starting at 3 seconds, every datapoint before is ignored
-                if round(float(i[1]), 1) > 20:
+                if round(float(i[1]), 1) > 1:
                     
                     data_length += 1
                     val_sum_y += float(i[0]) * (10 ** 6)
@@ -187,7 +187,7 @@ class AnalysisPlot(QMainWindow):
         data_length = 0 # length of the data set, used for calculate the mean
         val_sum = 0 # sum of all y values, used to calculate the mean
         lower_bound = 32 * 2
-        upper_bound = 32 * 30
+        upper_bound = 32 * 80
         with open(self.csv_nexus) as csv_file:
             c = csv.reader(csv_file, delimiter=',')
             for i in c:
@@ -310,8 +310,8 @@ class AnalysisPlot(QMainWindow):
     
 def main():
     app = QApplication(sys.argv)
-    path_nexus = "results/PilotStudie/Proband_6/23.04/two_hands/nexus"
-    path_psymex = "results/PilotStudie/Proband_6/23.04/two_hands/psymex"
+    path_nexus = "results/PilotStudie/Proband_5/23.04/two_hand/nexus"
+    path_psymex = "results/PilotStudie/Proband_5/23.04/two_hand/psymex"
     win = AnalysisPlot(path_psymex, path_nexus)
     sys.exit(app.exec_())
 
