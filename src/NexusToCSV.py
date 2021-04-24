@@ -1,8 +1,8 @@
 import sys
 import csv
 
-path = "results/PilotStudie/proband_1/23.04/two_hand/nexus_raw.txt"
-output = "results/PilotStudie/proband_1/23.04/two_hand/nexus"
+path = "results/PilotStudie/proband_1/24.04/one_hand/nexus_raw.txt"
+output = "results/PilotStudie/proband_1/24.04/one_hand/nexus"
 out = []
 case = 2
 
@@ -24,8 +24,11 @@ if case == 2:
     with open(path) as file:
         for line in file:
             x = line.split()
-            out.append([x[1], x[0]])
-
+            try:
+                out.append([x[1], x[0]])
+            except:
+                print("Please delete header and last line of nexus data")
+                
 with open(output, 'w', newline='') as myfile:
     wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
     #wr.writerows(self.pulse_sensor.BPM_list)

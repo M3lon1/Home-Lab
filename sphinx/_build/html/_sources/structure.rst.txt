@@ -25,6 +25,8 @@ The project is made up of the following python files
 * grove/i2c.py
 * pulse/MCP3008.py
 * pulse/pulsesensor.py
+* AnalysisPlot.py
+* NexusToCSV.py
 
 ****************
 SensorExample.py
@@ -116,3 +118,27 @@ pulse/pulsesensor.py
 This file controlls the pulse sensor. The code was taken from `this tutorial <https://tutorials-raspberrypi.de/raspberry-pi-puls-herzfrequenz-messen/>`_.
 The code was extended to hold the values and timestamp in a list. Functions to compute the RMSSD and SDNN are added.
 
+***************
+AnalysisPlot.py
+***************
+This file is used to plot Nexus and PsyMex data together and calculate their korrelation, variance, and mean.
+The plot just works for GSR values right now. In order to use the Nexus data you have to get them in the right format via the NexusToCSV.py file.
+To fit the Nexus and PsyMex starting and end point of the measurement you can set them during initialization of the class AnalysisPlot().
+The AnalysisPlot() class takes 6 positional arguments for initialization.
+1. path to psymex csv file.
+2. path to prepared nexus csv file.
+3. nexus start time in seconds.
+4. nexus end time in seconds.
+5. psymex start time in seconds.
+6. psymex end time in seconds.
+
+If you want to plot everything from beginning to end you can set start = 0 and end = math.inf.
+
+In an early version there where two separate plots for psymex and nexus data. Code is still there you just have to uncomment it if you want to use separate plots.
+If you want to use it, there are two lines that you have to uncomment which are obviously highlighted.
+1. Add the plot widget to the overall layout.
+2. Plot the data to their specific plot.
+
+*************
+NexusToCSV.py
+*************

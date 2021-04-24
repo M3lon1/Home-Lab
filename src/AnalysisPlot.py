@@ -10,11 +10,20 @@ import numpy as np
 import math
 
 class AnalysisPlot(QMainWindow):
-    def __init__(self, csv_psymex, csv_nexus):
+    def __init__(self, csv_psymex, csv_nexus, sn, en, sp, ep):
         """
         this class plots a csv file
+        sn, en, sp, ep defines starting end ending points of psymex/nexus data in seconds
         """
         super().__init__()
+        # Set starting point of PsyMex and Nexus
+        # Numbers are equal to Seconds
+        # Example start_psymex = 1 means psymex data is plotted begining at 1 second after recording
+        start_psymex = sp
+        end_psymex = ep
+        start_nexus = sn
+        end_nexus = en
+        
         self.csv_psymex = csv_psymex
         self.csv_nexus = csv_nexus
         self.layout = QVBoxLayout()
@@ -25,11 +34,13 @@ class AnalysisPlot(QMainWindow):
         self.plot_psymex.setAccessibleName('plot_gsr') # # Name property of plot_hr
         self.plot_psymex.setBackground('#212121') # Background color
         self.plot_psymex.setLabel('left', 'Micro  Siemens') # y axis label
-        # Nexus Plot
+        ##########################################################################
+        # Nexus Plot NOT USED! 
         self.plot_nexus = pg.PlotWidget(title='Skin Conductance Nexus') # Title
         self.plot_nexus.setAccessibleName('plot_gsr') # # Name property of plot_hr
         self.plot_nexus.setBackground('#212121') # Background color
         self.plot_nexus.setLabel('left', 'Micro  Siemens') # y axis label
+        ##########################################################################
         # Plot property widget
         self.plot_prop = QWidget()
         self.variance = QWidget()
@@ -91,14 +102,16 @@ class AnalysisPlot(QMainWindow):
         
         # Adding Widgets to overall layout
         self.layout.addWidget(self.plot_psymex)
+        
+        #################################################
+        # Uncomment if you want to use two separate plots
         #self.layout.addWidget(self.plot_nexus)
+        #################################################
+        
         self.layout.addWidget(self.plot_prop)
         
         self.count()
-        start_psymex = 1
-        start_nexus = 1
-        end_nexus = 80
-        self.plot_psymex_data(start_psymex)
+        self.plot_psymex_data(start_psymex, end_psymex)
         self.plot_nexus_data(start_nexus, end_nexus)
         self.calc_correlation()
         
@@ -110,7 +123,7 @@ class AnalysisPlot(QMainWindow):
         self.setCentralWidget(widget)
         self.showMaximized()
         
-    def plot_psymex_data(self, start):
+    def plot_psymex_data(self, start, end):
         '''
         This function plots the psymex data
         The psymex data is split up into separate files for each task
@@ -126,14 +139,15 @@ class AnalysisPlot(QMainWindow):
         with open(self.csv_psymex) as csv_file:
             c = csv.reader(csv_file, delimiter=',')
             for i in c:
-                # starting at 3 seconds, every datapoint before is ignored
+                # starting at x seconds, every datapoint before is ignore
                 if round(float(i[1]), 1) > start:
-                    
                     data_length += 1
                     val_sum_y += float(i[0]) * (10 ** 6)
                     x.append(float(i[1]))
                     y.append(float(i[0]) * (10 ** 6))
                     var.append(float(i[0]) * (10 ** 6))
+                if round(float(i[1]), 1) >= end:
+                    break
         self.x_psymex = x
         self.y_psymex = y
         
@@ -241,6 +255,11 @@ class AnalysisPlot(QMainWindow):
             self.label_var_nexus.setText("Varianz Nexus: " + str(var))
             self.label_stddev_nexus.setText("Standardabweichung Nexus: " + str(math.sqrt(var)))
             self.plot_psymex.plot(x, y, pen = self.pen2)
+            
+            ##########################
+            # uncomment if you want to plot to separate nexus plot
+            # self.plot_nexus.plot(x, y, pen= self.pen2)
+            ##########################
             return
 
     def calc_correlation(self):
@@ -280,23 +299,17 @@ class AnalysisPlot(QMainWindow):
                 Y.append(up_y[i+c-1])
             y_x.append(y)
             sum_mean_x += low_y[i]
-            #print("x: ", y, "y: " , up_y[i+c])
-            #print("x: ", x, "y: " , low_y[i])
         
         mean_Y = sum_mean_y / len(Y)
         mean_X = sum_mean_x / len(low_x)
 
-        
         for i in range(0, len(low_x)):
-            #print(low_y[i], " - ", mean_X, " * ", Y[i], " - ", mean_Y)
             s_1 += ((low_y[i] - mean_X) * (Y[i] - mean_Y))
             s_2 += ((low_y[i] - mean_X) ** 2)
             s_3 += ((Y[i] - mean_Y) ** 2)
 
         correlation =  s_1 / math.sqrt(( s_2 * s_3))
         self.label_correlation.setText("Korrelation: " + str(correlation))
-        #self.plot_nexus.plot(low_y, Y, pen = self.pen, symbol='o')
-        #self.plot_nexus.plot(Y, low_x, pen = self.pen, symbol='o')
         return
         
         
@@ -313,9 +326,13 @@ class AnalysisPlot(QMainWindow):
     
 def main():
     app = QApplication(sys.argv)
-    path_nexus = "results/PilotStudie/proband_5/23.04/one_hand/nexus"
-    path_psymex = "results/PilotStudie/proband_5/23.04/one_hand/psymex"
-    win = AnalysisPlot(path_psymex, path_nexus)
+    path_nexus = "results/PilotStudie/proband_1/24.04/two_hand/nexus"
+    path_psymex = "results/PilotStudie/proband_1/24.04/two_hand/psymex"
+    start_nexus = 2
+    end_nexus = 80
+    start_psymex = 1
+    end_psymex = 80
+    win = AnalysisPlot(path_psymex, path_nexus, start_nexus, end_nexus, start_psymex, end_psymex)
     sys.exit(app.exec_())
 
 if __name__ == "__main__":

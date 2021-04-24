@@ -104,6 +104,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#grove-i2c-py">grove/i2c.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#pulse-mcp3008-py">pulse/MCP3008.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#pulse-pulsesensor-py">pulse/pulsesensor.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#analysisplot-py">AnalysisPlot.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nexustocsv-py">NexusToCSV.py</a></li>
 </ul>
 </li>
 </ul>
@@ -198,6 +200,8 @@
 <li><p>grove/i2c.py</p></li>
 <li><p>pulse/MCP3008.py</p></li>
 <li><p>pulse/pulsesensor.py</p></li>
+<li><p>AnalysisPlot.py</p></li>
+<li><p>NexusToCSV.py</p></li>
 </ul>
 <div class="section" id="sensorexample-py">
 <h2>SensorExample.py<a class="headerlink" href="#sensorexample-py" title="Permalink to this headline">¶</a></h2>
@@ -272,6 +276,27 @@ it was taken from <a class="reference external" href="https://wiki.seeedstudio.c
 <h2>pulse/pulsesensor.py<a class="headerlink" href="#pulse-pulsesensor-py" title="Permalink to this headline">¶</a></h2>
 <p>This file controlls the pulse sensor. The code was taken from <a class="reference external" href="https://tutorials-raspberrypi.de/raspberry-pi-puls-herzfrequenz-messen/">this tutorial</a>.
 The code was extended to hold the values and timestamp in a list. Functions to compute the RMSSD and SDNN are added.</p>
+</div>
+<div class="section" id="analysisplot-py">
+<h2>AnalysisPlot.py<a class="headerlink" href="#analysisplot-py" title="Permalink to this headline">¶</a></h2>
+<p>This file is used to plot Nexus and PsyMex data together and calculate their korrelation, variance, and mean.
+The plot just works for GSR values right now. In order to use the Nexus data you have to get them in the right format via the NexusToCSV.py file.
+To fit the Nexus and PsyMex starting and end point of the measurement you can set them during initialization of the class AnalysisPlot().
+The AnalysisPlot() class takes 6 positional arguments for initialization.
+1. path to psymex csv file.
+2. path to prepared nexus csv file.
+3. nexus start time in seconds.
+4. nexus end time in seconds.
+5. psymex start time in seconds.
+6. psymex end time in seconds.</p>
+<p>If you want to plot everything from beginning to end you can set start = 0 and end = math.inf.</p>
+<p>In an early version there where two separate plots for psymex and nexus data. Code is still there you just have to uncomment it if you want to use separate plots.
+If you want to use it, there are two lines that you have to uncomment which are obviously highlighted.
+1. Add the plot widget to the overall layout.
+2. Plot the data to their specific plot.</p>
+</div>
+<div class="section" id="nexustocsv-py">
+<h2>NexusToCSV.py<a class="headerlink" href="#nexustocsv-py" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
