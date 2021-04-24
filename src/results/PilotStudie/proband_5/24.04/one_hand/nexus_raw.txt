@@ -1,0 +1,16 @@
+Unbearbeiteter Daten-Export (tab separat)
+
+
+Klient:	Sebastian,Heckner
+Sitzung:	
+Datum:	2021-04-24
+Zeit:	12:43:01
+Dauer:	0	Sekunden.
+Abtastrate:	32	Samples/sek.
+
+Beispiele	32 SPS	
+Zeit	Sensor-C:EDA (Hautleitwert)	
+
+
+
+<Unbearbeitete Daten exportiert>
