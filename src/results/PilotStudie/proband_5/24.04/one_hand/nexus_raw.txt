@@ -1,17 +1,3 @@
-Unbearbeiteter Daten-Export (tab separat)
-
-
-Klient:	Sebastian,Heckner
-Sitzung:	24.04.one_hand 
-Datum:	2021-04-24
-Zeit:	12:43:01
-Dauer:	86	Sekunden.
-Abtastrate:	32	Samples/sek.
-
-Beispiele	32 SPS	
-Zeit	Sensor-C:EDA (Hautleitwert)	
-
-
 0	3.764
 1	2.950
 2	2.950
@@ -2764,5 +2750,3 @@ Zeit	Sensor-C:EDA (Hautleitwert)
 2749	232.558
 2750	232.558
 2751	232.558
-
-<Unbearbeitete Daten exportiert>
