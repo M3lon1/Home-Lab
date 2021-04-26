@@ -326,8 +326,8 @@ class AnalysisPlot(QMainWindow):
     
 def main():
     app = QApplication(sys.argv)
-    path_nexus = "results/PilotStudie/proband_5/24.04/one_hand/nexus"
-    path_psymex = "results/PilotStudie/proband_5/24.04/one_hand/psymex"
+    path_nexus = "results/PilotStudie/proband_5/26.04/one_hand/nexus"
+    path_psymex = "results/PilotStudie/proband_5/26.04/one_hand/psymex"
     start_nexus = 2
     end_nexus = 80
     start_psymex = 1
