@@ -1,8 +1,8 @@
 import sys
 import csv
 
-path = "results/PilotStudie/proband_5/30.04/one_hand/nexus_raw_3.txt"
-output = "results/PilotStudie/proband_5/30.04/one_hand/nexus_3"
+path = "results/PilotStudie/proband_5/30.04/one_hand/nexus_raw_4.txt"
+output = "results/PilotStudie/proband_5/30.04/one_hand/nexus_4"
 out = []
 case = 2
 
