@@ -297,6 +297,13 @@ If you want to use it, there are two lines that you have to uncomment which are 
 </div>
 <div class="section" id="nexustocsv-py">
 <h2>NexusToCSV.py<a class="headerlink" href="#nexustocsv-py" title="Permalink to this headline">¶</a></h2>
+<p>This file is used to convert the Nexus file to a file that can be used with psymex AnalysisPlot.py file.
+Therefore export the Nexus session with the extended option “Include Time (as sample interval) / Zeit einschließen (als Sample-Intervalle)”
+Set the path variable to point to the exported nexus file. Set the output variable to the path where you want to store the output.
+The output file contains of several lines containing the time stamp and the gsr value, an example line looks like this.</p>
+<p>“1.849”,”1”</p>
+<p>The first number is the value and the second number is the time stamp.
+Note that this file currently just converts Nexus GSR output.</p>
 </div>
 </div>
 
