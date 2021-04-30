@@ -1,8 +1,8 @@
 import sys
 import csv
 
-path = "results/PilotStudie/proband_5/30.04/one_hand/nexus_raw.txt"
-output = "results/PilotStudie/proband_5/30.04/one_hand/nexus"
+path = "results/PilotStudie/proband_5/30.04/one_hand/nexus_raw_2.txt"
+output = "results/PilotStudie/proband_5/30.04/one_hand/nexus_2"
 out = []
 case = 2
 
@@ -37,6 +37,5 @@ if case == 2:
 
 with open(output, 'w', newline='') as myfile:
     wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-    #wr.writerows(self.pulse_sensor.BPM_list)
     print("writing")
     wr.writerows(out)
