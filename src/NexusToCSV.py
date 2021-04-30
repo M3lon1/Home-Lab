@@ -1,8 +1,8 @@
 import sys
 import csv
 
-path = "results/PilotStudie/proband_5/29.04/one_hand/nexus_raw.txt"
-output = "results/PilotStudie/proband_5/29.04/one_hand/nexus"
+path = "results/PilotStudie/proband_5/30.04/one_hand/nexus_raw.txt"
+output = "results/PilotStudie/proband_5/30.04/one_hand/nexus"
 out = []
 case = 2
 
@@ -19,16 +19,22 @@ if case == 1:
             value = tmp.split()
             out.append([value[0], t])
 
+a = "<Unbearbeitete Daten exportiert>"
+
 # if time format 0
 if case == 2:
+    header = 0
     with open(path) as file:
         for line in file:
-            x = line.split()
-            try:
-                out.append([x[1], x[0]])
-            except:
-                print("Please delete header and last line of nexus data")
-                
+            if header > 14 and len(line) != 33 and len(line) != 1:
+                x = line.split()
+                try:
+                    out.append([x[1], x[0]])
+                except:
+                    print(line)
+            else:
+                header += 1
+
 with open(output, 'w', newline='') as myfile:
     wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
     #wr.writerows(self.pulse_sensor.BPM_list)
