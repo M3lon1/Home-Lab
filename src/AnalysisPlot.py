@@ -326,11 +326,11 @@ class AnalysisPlot(QMainWindow):
     
 def main():
     app = QApplication(sys.argv)
-    path_nexus = "results/PilotStudie/proband_3/pilot/nexus/nexus"
-    path_psymex = "results/PilotStudie/proband_3/pilot/psymex/03019321"
-    start_nexus = 338
-    end_nexus = 395
-    start_psymex = 22
+    path_nexus = "results/PilotStudie/proband_2/pilot/nexus/nexus"
+    path_psymex = "results/PilotStudie/proband_2/pilot/psymex/05127111"
+    start_nexus = 336
+    end_nexus = 393
+    start_psymex = 20
     end_psymex = 80
     win = AnalysisPlot(path_psymex, path_nexus, start_nexus, end_nexus, start_psymex, end_psymex)
     sys.exit(app.exec_())
