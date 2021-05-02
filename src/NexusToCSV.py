@@ -4,8 +4,8 @@ import csv
 This file converts nexus raw data to a data format that can be used by the AnalysisPlot.py file
 The header and last line gets removed, so just the pure values stay
 '''
-path = "results/PilotStudie/proband_5/30.04/one_hand/nexus_raw_4.txt"
-output = "results/PilotStudie/proband_5/30.04/one_hand/nexus_4"
+path = "results/PilotStudie/proband_3/pilot/nexus_raw/32_raw.txt"
+output = "results/PilotStudie/proband_3/pilot/nexus/32"
 out = []
 
 header = 0
