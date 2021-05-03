@@ -217,7 +217,7 @@ class ScreenTask21(QMainWindow):
         
 def main():
     app = QApplication(sys.argv)
-    info = ScreenTask21("Max Mustermann", "one_hand", [])
+    info = ScreenTask21("Max Mustermann", "123", [])
     sys.exit(app.exec_())
 
 if __name__ == "__main__":
