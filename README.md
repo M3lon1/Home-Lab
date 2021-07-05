@@ -1,4 +1,2 @@
-# Home-Lab
-Issues: python3-pyqt5.svg
-cannot save graph as csv due to sip error
-fix: build own save funktion
+This is the repository for the bachelor thesis by Sebastian Heckner from the Bauhaus-University of Weimar.
+For instructions please read the thesis or look at the documentation generated with sphinx.
